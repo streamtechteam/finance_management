@@ -1,0 +1,68 @@
+
+
+<section class="dashboard-container">
+	<header class="dashboard-header">
+		<h1>Dashboard</h1>
+		<p>Welcome! Here are your key metrics and lists.</p>
+	</header>
+
+	<div class="dashboard-cards">
+		<!-- Project list only for admin -->
+		<!-- @if (this.isAdmin) { -->
+			<div class="dashboard-card">
+				<h2>Projects</h2>
+				<ul>
+					<li>Project A (placeholder)</li>
+					<li>Project B (placeholder)</li>
+					<li>Project C (placeholder)</li>
+				</ul>
+				<button>View All Projects</button>
+			</div>
+		<!-- } -->
+
+		<div class="dashboard-card">
+			<h2>Finance</h2>
+			<ul>
+				<li>Revenue: $10,000 (placeholder)</li>
+				<li>Expenses: $5,000 (placeholder)</li>
+				<li>Profit: $5,000 (placeholder)</li>
+			</ul>
+			<button>View Financials</button>
+			@if (this.canEditFinance) {
+				<button>Edit Finance</button>
+			}
+		</div>
+
+		<div class="dashboard-card">
+			<h2>Users</h2>
+			<ul>
+				<li>User 1 (placeholder)</li>
+				<li>User 2 (placeholder)</li>
+				<li>User 3 (placeholder)</li>
+			</ul>
+			<button>View All Users</button>
+			@if (this.canEditUsers) {
+				<button>Edit Users</button>
+			}
+		</div>
+	</div>
+
+	<section class="dashboard-features">
+		<h2>Quick Actions</h2>
+		<div class="dashboard-actions">
+			<!-- Add Project only for admin -->
+			@if (this.isAdmin) {
+				<button>Add Project</button>
+			}
+			<button>Add User</button>
+			<button>Generate Report</button>
+		</div>
+		<h2>Recent Activity</h2>
+		<ul>
+			<li>Project A created (placeholder)</li>
+			<li>User 2 updated profile (placeholder)</li>
+			<li>Finance report generated (placeholder)</li>
+		</ul>
+	</section>
+</section>
+

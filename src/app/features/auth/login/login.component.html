@@ -1,0 +1,49 @@
+<!-- 
+    <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="getLoginInput()">
+        <div id="LoginSpace">
+
+
+            <label for="inputField"></label>
+            <input class="inputField" formControlName="numberInputField" placeholder="09_________" type="tel">
+            <input class="inputField" formControlName="passwordInputField" placeholder="********" type="tel">
+
+            <button id="loginButton" name="loginButton" type="submit">ورود</button>
+        </div>
+    </form> -->
+
+<form [formGroup]="loginForm" (ngSubmit)="getLoginInput()">
+  <div id="LoginSpace">
+                <img alt="logo" id="Logo" src="/user-icon.png">
+            <div id="LoginHint">ورود به پنل کاربری</div>
+    <!-- Inputs with required attribute for HTML/browser accessibility -->
+    <input
+    #numberInputField
+      class="inputField"
+      formControlName="numberInputField"
+      placeholder="09_________"
+      type="tel"
+      required
+    />
+    @if(numberCtrl?.invalid && (numberCtrl?.dirty || numberCtrl?.touched)) {
+        @if(numberCtrl?.hasError('required')) {
+            
+        <div class="error">شماره تلفن الزامی است.</div>
+        }
+    }
+
+    <input
+      class="inputField"
+      formControlName="passwordInputField"
+      placeholder="********"
+      type="password"
+      required
+    />
+    @if(passwordCtrl?.invalid && (passwordCtrl?.dirty || passwordCtrl?.touched)) {
+    @if(passwordCtrl?.hasError('required')) {
+    <div class="error">رمز عبور الزامی است.</div>
+    } }
+
+
+    <button id="loginButton" type="submit" [disabled]="loginForm.invalid">ورود</button>
+  </div>
+</form>
