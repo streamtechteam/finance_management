@@ -12,7 +12,7 @@ import { firstValueFrom } from 'rxjs';
 export class AuthService {
 
 
-  constructor(private router: Router , private httpClient : HttpClient) {}
+  constructor(private  router: Router , private httpClient : HttpClient) {}
 
   verifyLogin(formData: FormDataType) {
     // console.log('formData', JSON.stringify(formData));
