@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DashboardService } from './service/dashboard.service';
-import { DataEditMode, Project, User } from '../../core/data.types';
+import { DataEditMode, Project, User } from '../../shared/data.types';
 // import { AppRoutingModule } from "../../app-routing.module";
 
 @Component({

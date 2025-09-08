@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 // import  '../../../core/network.config';
-import { VERIFYLOGINPATH } from '../../../core/network.config';
-import { FormDataType, LoginResponse } from '../../../core/data.types';
+import { VERIFYLOGINPATH } from '../../../network.config';
+import { FormDataType, LoginResponse } from '../../../shared/data.types';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { firstValueFrom } from 'rxjs';
 export class AuthService {
 
 
-  constructor(private  router: Router , private httpClient : HttpClient) {}
+  constructor(private router: Router , private httpClient : HttpClient) {}
 
   verifyLogin(formData: FormDataType) {
     // console.log('formData', JSON.stringify(formData));

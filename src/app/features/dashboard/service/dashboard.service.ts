@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DataEditMode, Finance, Project, User } from '../../../core/data.types';
+import { DataEditMode, Finance, Project, User } from '../../../shared/data.types';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
