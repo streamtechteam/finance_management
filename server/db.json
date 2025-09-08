@@ -1,0 +1,61 @@
+{
+  "users": [
+    {
+      "id": "Z9-FzHrl",
+      "phone": "+1234567890",
+      "password": "admin123",
+      "role": "admin"
+    },
+    {
+      "id": "Nei2ksRe",
+      "phone": "+0987654321",
+      "password": "user123",
+      "role": "user"
+    },
+    {
+      "id": "XVTgXBbh",
+      "phone": "+1122334455",
+      "password": "user456",
+      "role": "user"
+    }
+  ],
+  "projects": [
+    {
+      "id": "Nd87BYAP",
+      "name": "Project Alpha",
+      "description": "First project",
+      "budget": 50000,
+      "owner": "Z9-FzHrl"
+    },
+    {
+      "id": "q1OItVjP",
+      "name": "Project Beta",
+      "description": "Second project",
+      "budget": 75000,
+      "owner": "Nei2ksRe"
+    }
+  ],
+  "finances": [
+    {
+      "id": "h1XhgE6G",
+      "project_id": "Nd87BYAP",
+      "amount": 25000,
+      "category": "Development",
+      "date": "2024-01-15"
+    },
+    {
+      "id": "us0QvYdO",
+      "project_id": "Nd87BYAP",
+      "amount": 15000,
+      "category": "Marketing",
+      "date": "2024-02-01"
+    },
+    {
+      "id": "p1-ma_P_",
+      "project_id": "q1OItVjP",
+      "amount": 30000,
+      "category": "Design",
+      "date": "2024-01-20"
+    }
+  ]
+}

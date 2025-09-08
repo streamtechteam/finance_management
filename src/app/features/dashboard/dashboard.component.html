@@ -16,7 +16,7 @@
 					<li>Project B (placeholder)</li>
 					<li>Project C (placeholder)</li>
 				</ul>
-				<button>View All Projects</button>
+				<button (click)="onEditData({mode: 'get', type: 'projects'})">View All Projects</button>
 			</div>
 		<!-- } -->
 
@@ -27,7 +27,7 @@
 				<li>Expenses: $5,000 (placeholder)</li>
 				<li>Profit: $5,000 (placeholder)</li>
 			</ul>
-			<button>View Financials</button>
+			<button (click)="onEditData({mode: 'get', type: 'finances'})">View Financials</button>
 			@if (this.canEditFinance) {
 				<button>Edit Finance</button>
 			}
@@ -40,7 +40,7 @@
 				<li>User 2 (placeholder)</li>
 				<li>User 3 (placeholder)</li>
 			</ul>
-			<button>View All Users</button>
+			<button (click)="onEditData({mode: 'get', type: 'users'})">View All Users</button>
 			@if (this.canEditUsers) {
 				<button>Edit Users</button>
 			}
@@ -65,4 +65,3 @@
 		</ul>
 	</section>
 </section>
-
