@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DataEditMode } from '../../../core/data.types';
+import { DataEditMode, Finance, Project, User } from '../../../core/data.types';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class DashboardService {
   constructor(private httpClient: HttpClient) {}
 
   async editData(mode: DataEditMode) {
-    let response: object = {};
+    let response: Project | User | Finance | any;
     let token = null;
     if (localStorage.getItem('token') == null) {
       //TODO: redirect to login page

@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 // import  '../../../core/network.config';
 import { VERIFYLOGINPATH } from '../../../core/network.config';
+import { FormDataType, LoginResponse } from '../../../core/data.types';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
-export type FormDataType = {
-  numberInputField: string;
-  passwordInputField: string;
-};
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
 
-  constructor(private router: Router) {}
+  constructor(private router: Router , private httpClient : HttpClient) {}
 
   verifyLogin(formData: FormDataType) {
     console.log('formData', JSON.stringify(formData));
@@ -20,27 +20,37 @@ export class AuthService {
       phone: formData.numberInputField,
       password: formData.passwordInputField,
     });
-    fetch(VERIFYLOGINPATH, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: formDataString,
-    })
-      .then((res) => {
-        // console.log(res.json())
-        return res.json();
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.status == 200) {
-          localStorage.setItem('token', res.token);
-          this.loginDone();
-          return res;
-        } else {
-          alert('check you username and password');
-        }
-      });
+    firstValueFrom(this.httpClient.post<LoginResponse>(VERIFYLOGINPATH, formDataString)).then((res: LoginResponse) => {
+      if (res.status == 200) {
+        localStorage.setItem('token', res.token);
+        this.loginDone();
+        return res;
+      } else {
+        alert('check you username and password');
+        return res;
+      }
+    });
+    // fetch(VERIFYLOGINPATH, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: formDataString,
+    // })
+    //   .then((res) => {
+    //     // console.log(res.json())
+    //     return res.json();
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     if (res.status == 200) {
+    //       localStorage.setItem('token', res.token);
+    //       this.loginDone();
+    //       return res;
+    //     } else {
+    //       alert('check you username and password');
+    //     }
+    //   });
   }
 
   // async verifyToken(tk?: string) {

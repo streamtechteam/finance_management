@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DashboardService } from './service/dashboard.service';
-import { DataEditMode } from '../../core/data.types';
+import { DataEditMode, Project, User } from '../../core/data.types';
 // import { AppRoutingModule } from "../../app-routing.module";
 
 @Component({
@@ -19,12 +19,13 @@ export class DashboardComponent {
 
   constructor(private router: Router , private dashboardService: DashboardService) {
     dashboardService.editData({mode: 'get', type: 'me'}).then(res => {
-      // console.log(res);
-      // this.isAdmin = res.role === 'admin';
-      // this.canEditUsers = res.role === 'admin';
-      // this.canEditFinance = res.role === 'admin';
-      // this.canEditProjects = res.role === 'admin';
-      // console.log(this.isAdmin);
+      let user = res as User;
+      console.log(user.role);
+      this.isAdmin = user.role === 'admin';
+      this.canEditUsers = user.role === 'admin';
+      this.canEditFinance = user.role === 'admin';
+      this.canEditProjects = user.role === 'admin';
+      console.log(this.isAdmin);
     })
     // Example: set admin status (replace with real auth logic)
     // this.isAdmin = checkIfUserIsAdmin();
