@@ -15,12 +15,12 @@ export class AuthService {
   constructor(private router: Router , private httpClient : HttpClient) {}
 
   verifyLogin(formData: FormDataType) {
-    console.log('formData', JSON.stringify(formData));
+    // console.log('formData', JSON.stringify(formData));
     let formDataString = JSON.stringify({
       phone: formData.numberInputField,
       password: formData.passwordInputField,
     });
-    firstValueFrom(this.httpClient.post<LoginResponse>(VERIFYLOGINPATH, formDataString)).then((res: LoginResponse) => {
+    firstValueFrom(this.httpClient.post<LoginResponse>(VERIFYLOGINPATH, formData)).then((res: LoginResponse) => {
       if (res.status == 200) {
         localStorage.setItem('token', res.token);
         this.loginDone();
