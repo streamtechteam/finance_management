@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DataEditMode, Finance, Project, User } from '../../../shared/data.types';
 import { firstValueFrom } from 'rxjs';
@@ -9,7 +9,7 @@ import { firstValueFrom } from 'rxjs';
 export class DashboardService {
   constructor(private httpClient: HttpClient) {}
 
-  async editData(mode: DataEditMode) {
+  async dataRequestHandler(mode: DataEditMode) {
     let response: Project | User | Finance | any;
     let token = null;
     if (localStorage.getItem('token') == null) {
@@ -22,31 +22,57 @@ export class DashboardService {
     switch (mode.mode) {
       case 'add':
         response = await firstValueFrom(
-          this.httpClient.post(`http://localhost:3001/api/${mode.data.type}`, mode.data)
+          this.httpClient.post(`http://localhost:3001/api/${mode.data.type}`, mode.data),
         );
         break;
       case 'edit':
         response = await firstValueFrom(
           this.httpClient.put(
             `http://localhost:3001/api/${mode.data.type}/${mode.data.id}`,
-            mode.data
-          )
+            mode.data,
+          ),
         );
         break;
       case 'delete':
         response = await firstValueFrom(
-          this.httpClient.delete(`http://localhost:3001/api/${mode.data.type}/${mode.data.id}`)
+          this.httpClient.delete(`http://localhost:3001/api/${mode.data.type}/${mode.data.id}`),
         );
         break;
       case 'get':
         response = await firstValueFrom(
-          this.httpClient.get(`http://localhost:3001/api/${mode.type}`)
+          this.httpClient.get(`http://localhost:3001/api/${mode.type}`),
         );
         break;
     }
     return response;
   }
+  // editData(mode: DataEditMode) {
+  //   this.dataRequestHandler(mode).then((res) => {
+  //     return res;
+  //     // this.statusCodeHandler(res.status, alert);
+  //   });
+  //   // return
+  // }
 
+  statusCodeHandler(code: HttpStatusCode, alertFunc: Function) {
+    let statusCode = parseInt(code.toFixed());
+    if (statusCode >= 200 && statusCode < 300) {
+      alertFunc(`Success with code : ${statusCode} and status : ${code}`);
+    }
+    if (statusCode >= 300 && statusCode < 400) {
+      alertFunc(`Success with code : ${statusCode} and status : ${code}`);
+    }
+    if (statusCode >= 400 && statusCode < 500) {
+      alertFunc(`Success with code : ${statusCode} and status : ${code}`);
+    }
+    if (statusCode >= 500) {
+      alertFunc(`Success with code : ${statusCode} and status : ${code}`);
+    }
+    return {
+      status: code,
+      code: statusCode,
+    };
+  }
   checkIfTokenExist() {
     return localStorage.getItem('token') != null;
     // this.editData()

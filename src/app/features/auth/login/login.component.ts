@@ -1,9 +1,15 @@
 import { Component, signal } from '@angular/core';
 // import { RouterOutlet } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { FormDataType } from '../services/auth.service';
+import { FormDataType } from '../../../shared/data.types';
 
 @Component({
   standalone: true,
@@ -17,7 +23,7 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {
     this.loginForm = this.formBuilder.group({
       numberInputField: ['', [Validators.required]],
