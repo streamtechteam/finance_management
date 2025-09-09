@@ -55,10 +55,9 @@ export class DashboardService {
   // }
 
   statusCodeHandler(code: HttpStatusCode, alertFunc: Function) {
-    console.log(Object.entries(HttpStatusCode));
-    // let test2 =
-    // let test3 = ;
-    let codeDesc = Object.keys(HttpStatusCode).slice(
+    // friendly advice :
+    // dont try to understand this variable , you may lost a lot of brain cells , it just works
+    let status = Object.keys(HttpStatusCode).slice(
       Object.keys(HttpStatusCode).length / 2,
       Object.keys(HttpStatusCode).length,
     )[
@@ -68,17 +67,18 @@ export class DashboardService {
     ];
 
     let statusCode = parseInt(code.toFixed());
+
     if (statusCode >= 200 && statusCode < 300) {
-      alertFunc(`Success , Status Code : ${statusCode} and status : ${codeDesc}`);
+      alertFunc(`Success , Status Code : ${statusCode} and status : ${status}`);
     }
     if (statusCode >= 300 && statusCode < 400) {
-      alertFunc(`Need extra action ,Status Code : ${statusCode} and status : ${codeDesc}`);
+      alertFunc(`Need extra action ,Status Code : ${statusCode} and status : ${status}`);
     }
     if (statusCode >= 400 && statusCode < 500) {
-      alertFunc(`Client failed , Status Code : ${statusCode} and status : ${codeDesc}`);
+      alertFunc(`Client failed , Status Code : ${statusCode} and status : ${status}`);
     }
     if (statusCode >= 500) {
-      alertFunc(`Server failed , Status Code : ${statusCode} and status : ${codeDesc}`);
+      alertFunc(`Server failed , Status Code : ${statusCode} and status : ${status}`);
     }
     return {
       status: code,
