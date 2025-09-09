@@ -55,9 +55,14 @@ export class DashboardService {
   // }
 
   statusCodeHandler(code: HttpStatusCode, alertFunc: Function) {
+    console.log(Object.entries(HttpStatusCode));
     let test = Object.keys(HttpStatusCode).length / 2;
-    let test2 = Object.keys(HttpStatusCode);
-    console.log(test2);
+    let test2 = Object.keys(HttpStatusCode).slice(0, test);
+    let test3 = Object.keys(HttpStatusCode).slice(test, Object.keys(HttpStatusCode).length);
+
+    // let test4: {} = Object.create({});
+    // test4;
+    console.log(test2, test3);
     // for (let code in HttpStatusCode) {
     //   if(code)
     // }
