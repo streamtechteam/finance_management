@@ -55,6 +55,8 @@ export class DashboardService {
   // }
 
   statusCodeHandler(code: HttpStatusCode, alertFunc: Function) {
+    console.log(code.toString());
+    // let test = eval(`HttpStatusCode.${code}`)
     let statusCode = parseInt(code.toFixed());
     if (statusCode >= 200 && statusCode < 300) {
       alertFunc(`Success , Status Code : ${statusCode} and status : ${code}`);
