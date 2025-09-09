@@ -34,7 +34,10 @@ export class DashboardComponent {
     // this.isAdmin = checkIfUserIsAdmin();
   }
   onEditData(mode: DataEditMode) {
-    this.dashboardService.dataRequestHandler(mode).then(() => {});
+    this.dashboardService.dataRequestHandler(mode).then((res) => {
+      console.log(res);
+      this.dashboardService.statusCodeHandler(res.status, alert);
+    });
     // this.dashboardService.dataRequestHandler(mode).then((res) => {
     //   console.log(res);
     // });

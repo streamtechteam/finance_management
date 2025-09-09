@@ -57,16 +57,16 @@ export class DashboardService {
   statusCodeHandler(code: HttpStatusCode, alertFunc: Function) {
     let statusCode = parseInt(code.toFixed());
     if (statusCode >= 200 && statusCode < 300) {
-      alertFunc(`Success with code : ${statusCode} and status : ${code}`);
+      alertFunc(`Success , Status Code : ${statusCode} and status : ${code}`);
     }
     if (statusCode >= 300 && statusCode < 400) {
-      alertFunc(`Success with code : ${statusCode} and status : ${code}`);
+      alertFunc(`Need extra action ,Status Code : ${statusCode} and status : ${code}`);
     }
     if (statusCode >= 400 && statusCode < 500) {
-      alertFunc(`Success with code : ${statusCode} and status : ${code}`);
+      alertFunc(`Client failed , Status Code : ${statusCode} and status : ${code}`);
     }
     if (statusCode >= 500) {
-      alertFunc(`Success with code : ${statusCode} and status : ${code}`);
+      alertFunc(`Server failed , Status Code : ${statusCode} and status : ${code}`);
     }
     return {
       status: code,
