@@ -18,7 +18,7 @@ export class DashboardService {
     let token = null;
     if (localStorage.getItem('token') == null) {
       alert('You are not logged in');
-      this.router.navigate(['login']);
+      this.router.navigate(['home']);
       //TODO: redirect to login page
       return;
     } else {

@@ -19,11 +19,11 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: '**',
-    component: NotFoundComponent,
-  },
-  {
     path: 'home',
     component: HomeComponent,
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
   },
 ];
