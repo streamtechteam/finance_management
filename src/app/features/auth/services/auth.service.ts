@@ -16,8 +16,8 @@ export class AuthService {
   verifyLogin(formData: FormDataType) {
     // console.log('formData', JSON.stringify(formData));
     let formDataString = JSON.stringify({
-      phone: formData.numberInputField,
-      password: formData.passwordInputField,
+      phone: formData.number,
+      password: formData.passwordInp,
     });
     firstValueFrom(this.httpClient.post<LoginResponse>(VERIFYLOGINPATH, formData)).then(
       (res: LoginResponse) => {
