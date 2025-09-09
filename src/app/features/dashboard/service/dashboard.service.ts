@@ -2,17 +2,23 @@ import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DataEditMode, Finance, Project, User } from '../../../shared/data.types';
 import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+  ) {}
 
   async dataRequestHandler(mode: DataEditMode) {
     let response: Project | User | Finance | any;
     let token = null;
     if (localStorage.getItem('token') == null) {
+      alert('You are not logged in');
+      this.router.navigate(['login']);
       //TODO: redirect to login page
       return;
     } else {
