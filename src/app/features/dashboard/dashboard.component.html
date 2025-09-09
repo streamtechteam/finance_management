@@ -16,7 +16,7 @@
 					<li>Project B (placeholder)</li>
 					<li>Project C (placeholder)</li>
 				</ul>
-				<button (click)="onEditData({mode: 'get', type: 'projects'})" matButton>View All Projects</button>
+				<button (click)="onEditData({mode: 'get', type: 'projects'})" matFab>View All Projects</button>
 			</div>
 		<!-- } -->
 
@@ -27,9 +27,9 @@
 				<li>Expenses: $5,000 (placeholder)</li>
 				<li>Profit: $5,000 (placeholder)</li>
 			</ul>
-			<button (click)="onEditData({mode: 'get', type: 'finances'})" matButton>View Financials</button>
+			<button (click)="onEditData({mode: 'get', type: 'finances'})" matFab>View Financials</button>
 			@if (this.canEditFinance) {
-				<button matButton>Edit Finance</button>
+				<button matFab>Edit Finance</button>
 			}
 		</div>
 
@@ -40,9 +40,9 @@
 				<li>User 2 (placeholder)</li>
 				<li>User 3 (placeholder)</li>
 			</ul>
-			<button (click)="onEditData({mode: 'get', type: 'users'})" matButton>View All Users</button>
+			<button (click)="onEditData({mode: 'get', type: 'users'})" matFab>View All Users</button>
 			@if (this.canEditUsers) {
-				<button matButton>Edit Users</button>
+				<button matFab>Edit Users</button>
 			}
 		</div>
 	</div>
@@ -52,10 +52,10 @@
 		<div class="dashboard-actions">
 			<!-- Add Project only for admin -->
 			@if (this.isAdmin) {
-				<button matButton>Add Project</button>
+				<button matFab>Add Project</button>
 			}
-			<button matButton>Add User</button>
-			<button matButton>Generate Report</button>
+			<button matFab>Add User</button>
+			<button matFab>Generate Report</button>
 		</div>
 		<h2>Recent Activity</h2>
 		<ul>

@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DashboardService } from './service/dashboard.service';
 import { DataEditMode, Project, User } from '../../shared/data.types';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatFabButton } from '@angular/material/button';
 // import { AppRoutingModule } from "../../app-routing.module";
 
 @Component({
   selector: 'DashboardComponent',
-  imports: [RouterLink, MatButton],
+  imports: [RouterLink, MatButton, MatFabButton],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
