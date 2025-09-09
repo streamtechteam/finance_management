@@ -55,7 +55,9 @@ export class DashboardService {
   // }
 
   statusCodeHandler(code: HttpStatusCode, alertFunc: Function) {
-    console.Object.keys(HttpStatusCode);
+    let test = Object.keys(HttpStatusCode).length / 2;
+    let test2 = Object.keys(HttpStatusCode);
+    console.log(test2);
     // for (let code in HttpStatusCode) {
     //   if(code)
     // }
