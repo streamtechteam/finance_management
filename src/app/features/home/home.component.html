@@ -1,0 +1,45 @@
+<div class="home-container">
+  <div class="content">
+    <h1 class="welcome-title">Welcome,</h1>
+    <div class="button-container">
+      <button mat-raised-button color="primary" class="action-button">Register</button>
+      <button mat-raised-button color="accent" class="action-button">or, Login</button>
+    </div>
+  </div>
+</div>
+
+<style>
+.home-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.welcome-title {
+  font-size: 4rem;
+  font-weight: 300;
+  margin-bottom: 3rem;
+  color: #333;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.action-button {
+  font-size: 1.2rem;
+  padding: 1rem 3rem;
+  min-width: 200px;
+  height: 60px;
+}
+</style>
