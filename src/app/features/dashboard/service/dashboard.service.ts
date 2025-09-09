@@ -56,17 +56,17 @@ export class DashboardService {
 
   statusCodeHandler(code: HttpStatusCode, alertFunc: Function) {
     console.log(Object.entries(HttpStatusCode));
-    let test = Object.keys(HttpStatusCode).length / 2;
-    let test2 = Object.keys(HttpStatusCode).slice(0, test);
-    let test3 = Object.keys(HttpStatusCode).slice(test, Object.keys(HttpStatusCode).length);
-    let codeDesc = test3[test2.indexOf(code.toString())];
-    // let test4: {} = Object.create();
-    // test4;
-    console.log(test2, test3);
-    // for (let code in HttpStatusCode) {
-    //   if(code)
-    // }
-    // let test = eval(`HttpStatusCode.${code}`)
+    // let test2 =
+    // let test3 = ;
+    let codeDesc = Object.keys(HttpStatusCode).slice(
+      Object.keys(HttpStatusCode).length / 2,
+      Object.keys(HttpStatusCode).length,
+    )[
+      Object.keys(HttpStatusCode)
+        .slice(0, Object.keys(HttpStatusCode).length / 2)
+        .indexOf(code.toString())
+    ];
+
     let statusCode = parseInt(code.toFixed());
     if (statusCode >= 200 && statusCode < 300) {
       alertFunc(`Success , Status Code : ${statusCode} and status : ${codeDesc}`);
