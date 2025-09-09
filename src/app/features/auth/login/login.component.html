@@ -1,4 +1,4 @@
-<!-- 
+<!--
     <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="getLoginInput()">
         <div id="LoginSpace">
 
@@ -19,21 +19,21 @@
     <input
     #numberInputField
       class="inputField"
-      formControlName="numberInputField"
+      formControlName="phonenumber"
       placeholder="09_________"
       type="tel"
       required
     />
     @if(numberCtrl?.invalid && (numberCtrl?.dirty || numberCtrl?.touched)) {
         @if(numberCtrl?.hasError('required')) {
-            
+
         <div class="error">شماره تلفن الزامی است.</div>
         }
     }
 
     <input
       class="inputField"
-      formControlName="passwordInputField"
+      formControlName="password"
       placeholder="********"
       type="password"
       required

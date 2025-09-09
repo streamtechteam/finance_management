@@ -6,7 +6,7 @@ export type DeleteMode = { mode: 'delete'; data: { id: string; type: DataType } 
 export type DataType = 'projects' | 'finances' | 'users' | 'me';
 
 export type FormDataType = {
-  number: string;
+  phonenumber: string;
   password: string;
 };
 

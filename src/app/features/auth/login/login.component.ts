@@ -26,11 +26,8 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
   ) {
     this.loginForm = this.formBuilder.group({
-      numberInputField: ['', [Validators.required]],
-      passwordInputField: [
-        '',
-        [Validators.required, Validators.minLength(5), Validators.maxLength(20)],
-      ],
+      phonenumber: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
     });
     // this.authService
   }
