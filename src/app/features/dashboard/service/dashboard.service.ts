@@ -59,8 +59,8 @@ export class DashboardService {
     let test = Object.keys(HttpStatusCode).length / 2;
     let test2 = Object.keys(HttpStatusCode).slice(0, test);
     let test3 = Object.keys(HttpStatusCode).slice(test, Object.keys(HttpStatusCode).length);
-
-    // let test4: {} = Object.create({});
+    let codeDesc = test3[test2.indexOf(code.toString())];
+    // let test4: {} = Object.create();
     // test4;
     console.log(test2, test3);
     // for (let code in HttpStatusCode) {
@@ -69,16 +69,16 @@ export class DashboardService {
     // let test = eval(`HttpStatusCode.${code}`)
     let statusCode = parseInt(code.toFixed());
     if (statusCode >= 200 && statusCode < 300) {
-      alertFunc(`Success , Status Code : ${statusCode} and status : ${code}`);
+      alertFunc(`Success , Status Code : ${statusCode} and status : ${codeDesc}`);
     }
     if (statusCode >= 300 && statusCode < 400) {
-      alertFunc(`Need extra action ,Status Code : ${statusCode} and status : ${code}`);
+      alertFunc(`Need extra action ,Status Code : ${statusCode} and status : ${codeDesc}`);
     }
     if (statusCode >= 400 && statusCode < 500) {
-      alertFunc(`Client failed , Status Code : ${statusCode} and status : ${code}`);
+      alertFunc(`Client failed , Status Code : ${statusCode} and status : ${codeDesc}`);
     }
     if (statusCode >= 500) {
-      alertFunc(`Server failed , Status Code : ${statusCode} and status : ${code}`);
+      alertFunc(`Server failed , Status Code : ${statusCode} and status : ${codeDesc}`);
     }
     return {
       status: code,
