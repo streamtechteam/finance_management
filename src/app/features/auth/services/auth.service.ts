@@ -6,13 +6,12 @@ import { FormDataType, LoginResponse } from '../../../shared/data.types';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
-
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-
-
-  constructor(private router: Router , private httpClient : HttpClient) {}
+  constructor(
+    private router: Router,
+    private httpClient: HttpClient,
+  ) {}
 
   verifyLogin(formData: FormDataType) {
     // console.log('formData', JSON.stringify(formData));
@@ -20,16 +19,19 @@ export class AuthService {
       phone: formData.numberInputField,
       password: formData.passwordInputField,
     });
-    firstValueFrom(this.httpClient.post<LoginResponse>(VERIFYLOGINPATH, formData)).then((res: LoginResponse) => {
-      if (res.status == 200) {
-        localStorage.setItem('token', res.token);
-        this.loginDone();
-        return res;
-      } else {
-        alert('check you username and password');
-        return res;
-      }
-    });
+    firstValueFrom(this.httpClient.post<LoginResponse>(VERIFYLOGINPATH, formData)).then(
+      (res: LoginResponse) => {
+        console.log(res);
+        if (res.status == 200) {
+          localStorage.setItem('token', res.token);
+          this.loginDone();
+          return res;
+        } else {
+          alert('check you username and password');
+          return res;
+        }
+      },
+    );
     // fetch(VERIFYLOGINPATH, {
     //   method: 'POST',
     //   headers: {
