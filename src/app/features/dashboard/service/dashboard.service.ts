@@ -1,8 +1,12 @@
 import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { DataEditMode, DialogData, Finance, Project, User } from '../../../shared/data.types';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { AlertResult } from '../../alert/service/alert.service';
+import { AlertConfig } from '../../../shared/alert.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Injectable({
   providedIn: 'root',
@@ -17,11 +21,12 @@ export class DashboardService {
   constructor(
     private httpClient: HttpClient,
     private router: Router,
+    private dialog: MatDialog
   ) {}
 
- private openDialog(config: AlertConfig): Observable<AlertResult> {
+ public openDialog(config: AlertConfig): Observable<AlertResult> {
     return this.dialog
-      .open(MaterialAlertComponent, {
+      .open(DialogComponent, {
         data: config,
         width: '400px',
         maxWidth: '95vw',

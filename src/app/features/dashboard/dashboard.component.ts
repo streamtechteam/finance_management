@@ -36,13 +36,19 @@ export class DashboardComponent {
     this.dashboardService.dataRequestHandler(mode).then((res) => {
       console.log(res);
       this.dashboardService.statusCodeHandler(res?.responese.status, alert);
-      this.dashboardService.isDialogOpen.update((data) => {
-        data.hidden = false;
-        data.title = res?.title!.at(0)?.toUpperCase()! + res?.title!.slice(1 , res?.title?.length); 
-        data.items = res?.responese.data;
-        // console.log(res?.responese.data)
-        return data;
-      });
+      this.dashboardService.openDialog({
+        title: res?.title!.at(0)?.toUpperCase()! + res?.title!.slice(1 , res?.title?.length), 
+        message: res?.responese.data,
+        icon: 'success',
+        confirmButtonText: 'OK',
+      })
+      // this.dashboardService.isDialogOpen.update((data) => {
+      //   data.hidden = false;
+      //   data.title = res?.title!.at(0)?.toUpperCase()! + res?.title!.slice(1 , res?.title?.length); 
+      //   data.items = res?.responese.data;
+      //   // console.log(res?.responese.data)
+      //   return data;
+      // });
     });
   }
 
