@@ -38,11 +38,11 @@
     }
 
     <button
-        mat-flat-button
-        [color]="getButtonColor()"
+        matFlatButton
         [mat-dialog-close]="true"
         cdkFocusInitial
-        class="confirm-btn"
+        class="confirm-btn "
+        [classList]="[getButtonColor(), 'confirm-btn']"
         (click)="onConfirm()"
     >
         {{ data.confirmButtonText || 'OK' }}
