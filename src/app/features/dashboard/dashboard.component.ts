@@ -38,7 +38,7 @@ export class DashboardComponent {
       this.dashboardService.statusCodeHandler(res?.responese.status, alert);
       this.dashboardService.openDialog({
         title: res?.title!.at(0)?.toUpperCase()! + res?.title!.slice(1 , res?.title?.length), 
-        message: res?.responese.data,
+        items: res?.responese.data,
         icon: 'success',
         confirmButtonText: 'OK',
       })

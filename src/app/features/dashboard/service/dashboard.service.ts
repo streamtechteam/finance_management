@@ -7,6 +7,7 @@ import { AlertResult } from '../../alert/service/alert.service';
 import { AlertConfig } from '../../../shared/alert.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
+import { DataDialogConfig } from '../../../shared/dataDialog.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class DashboardService {
     private dialog: MatDialog
   ) {}
 
- public openDialog(config: AlertConfig): Observable<AlertResult> {
+ public openDialog(config: DataDialogConfig): Observable<AlertResult> {
     return this.dialog
       .open(DialogComponent, {
         data: config,
