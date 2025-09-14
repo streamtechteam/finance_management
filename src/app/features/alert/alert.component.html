@@ -1,41 +1,50 @@
-<h2 mat-dialog-title *ngIf="data.title" class="alert-title">
-  <mat-icon *ngIf="data.icon" class="icon {{ data.icon }}">{{ getIconName() }}</mat-icon>
-  {{ data.title }}
-</h2>
+@if (data.title) {
+    <h2 mat-dialog-title class="alert-title">
+        @if (data.icon) {
+            <mat-icon class="icon {{ data.icon }}">{{ getIconName() }}</mat-icon>
+        }
+        {{ data.title }}
+    </h2>
+}
 
 <mat-dialog-content class="alert-content">
-  <p *ngIf="data.message" class="message">{{ data.message }}</p>
+    @if (data.message) {
+        <p class="message">{{ data.message }}</p>
+    }
 
-  <mat-form-field *ngIf="showInput" appearance="outline" class="input-field">
-    <input
-      matInput
-      [type]="data.inputType || 'text'"
-      [placeholder]="data.inputPlaceholder || ''"
-      [value]="data.inputValue || ''"
-      #inputField
-    />
-  </mat-form-field>
+    @if (showInput) {
+        <mat-form-field appearance="outline" class="input-field">
+            <input
+                matInput
+                [type]="data.inputType || 'text'"
+                [placeholder]="data.inputPlaceholder || ''"
+                [value]="data.inputValue || ''"
+                #inputField
+            />
+        </mat-form-field>
+    }
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" class="alert-actions">
-  <button
-    *ngIf="data.showCancelButton"
-    mat-button
-    [mat-dialog-close]="false"
-    [color]="'primary'"
-    class="cancel-btn"
-  >
-    {{ data.cancelButtonText || 'Cancel' }}
-  </button>
+    @if (data.showCancelButton) {
+        <button
+            mat-button
+            [mat-dialog-close]="false"
+            [color]="'primary'"
+            class="cancel-btn"
+        >
+            {{ data.cancelButtonText || 'Cancel' }}
+        </button>
+    }
 
-  <button
-    mat-flat-button
-    [color]="getButtonColor()"
-    [mat-dialog-close]="true"
-    cdkFocusInitial
-    class="confirm-btn"
-    (click)="onConfirm()"
-  >
-    {{ data.confirmButtonText || 'OK' }}
-  </button>
+    <button
+        mat-flat-button
+        [color]="getButtonColor()"
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+        class="confirm-btn"
+        (click)="onConfirm()"
+    >
+        {{ data.confirmButtonText || 'OK' }}
+    </button>
 </mat-dialog-actions>

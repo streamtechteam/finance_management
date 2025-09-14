@@ -3,19 +3,14 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.material-swal {
-    /* border-radius: 20px; */
+/* src/styles.css */
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 8px !important;
+    padding: 24px !important;
 }
-.material-swal .swal2-popup {
-    border-radius: 20px;
+
+/* Optional: backdrop color */
+.mat-mdc-dialog-backdrop {
+    background-color: rgba(0, 0, 0, 0.4) !important;
 }
-.material-swal .swal2-title {}
-.material-swal .swal2-html-container {}
-.material-swal .swal2-confirm {
-    width: 200px;
-    border: none;
-    /* border-radius: 10px; */
-}
-.material-swal .swal2-cancel {}
-.material-swal .swal2-input {}
-.material-swal .swal2-footer {}
