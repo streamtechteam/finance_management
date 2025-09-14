@@ -6,7 +6,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* src/styles.css */
 
 .mat-mdc-dialog-container .mdc-dialog__surface {
-    border-radius: 8px !important;
+    border-radius: 20px !important;
     padding: 24px !important;
 }
 
