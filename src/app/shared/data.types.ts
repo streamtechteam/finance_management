@@ -42,3 +42,9 @@ export type LoginResponse = {
   token: string;
   user: User;
 };
+
+export type DialogData = {
+  hidden : boolean;
+  title: string;
+  items: any[];
+}

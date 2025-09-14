@@ -10,20 +10,30 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FormDataType } from '../../../shared/data.types';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
+import { SwalComponent, SwalDirective } from '@sweetalert2/ngx-sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   standalone: true,
   selector: 'LoginComponent',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, MatButton, MatInput, MatFormField, MatLabel, MatIcon, MatHint, MatSuffix , MatIconButton , SwalComponent,SwalDirective],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  hidePassword = signal(true);
+  showPasswordClick(event: MouseEvent) {
+    this.hidePassword.set(!this.hidePassword());
+    event.stopPropagation();
+  }
   constructor(
     private router: Router,
     private authService: AuthService,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder
   ) {
     this.loginForm = this.formBuilder.group({
       phonenumber: ['', [Validators.required]],
@@ -39,14 +49,14 @@ export class LoginComponent {
   // }
 
   get numberCtrl() {
-    return this.loginForm.get('numberInputField');
+    return this.loginForm.get('phonenumber');
   }
   get passwordCtrl() {
-    return this.loginForm.get('passwordInputField');
+    return this.loginForm.get('password');
   }
   getLoginInput() {
     // event.preventDefault();
-
+   
     let formData: FormDataType = this.loginForm.getRawValue();
     console.log('formData', formData);
     localStorage.removeItem('token');

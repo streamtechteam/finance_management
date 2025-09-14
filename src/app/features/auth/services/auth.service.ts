@@ -5,6 +5,8 @@ import { VERIFYLOGINPATH } from '../../../network.config';
 import { FormDataType, LoginResponse } from '../../../shared/data.types';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
+import Swal from 'sweetalert2';
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -32,7 +34,6 @@ export class AuthService {
         }
       },
     );
-    // fetch(VERIFYLOGINPATH, {
     //   method: 'POST',
     //   headers: {
     //     'Content-Type': 'application/json',
@@ -55,51 +56,24 @@ export class AuthService {
     //   });
   }
 
-  // async verifyToken(tk?: string) {
-  //   let token;
-  //   let ifTokenExist: boolean = false;
-
-  //   if (tk) {
-  //     token = tk;
-  //   } else if (localStorage.getItem('token')) {
-  //     token = localStorage.getItem('token');
-  //   } else {
-  //     return 'no token';
-  //   }
-
-  //   await fetch(this.verifyTokenPath, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({ token: token }),
-  //   })
-  //     .then((res) => {
-  //       console.log(res);
-  //       return res.json();
-  //     })
-  //     .then((res) => {
-  //       // console.log(res);
-  //       if (res.status == 200) {
-  //         ifTokenExist = true;
-  //       } else if (res.status == 401) {
-  //         console.log('NO TOKEN ', res.status);
-  //         ifTokenExist = false;
-  //       }
-  //       console.log(res);
-  //     })
-  //     .then(() => {
-  //       if (ifTokenExist == false) {
-  //         localStorage.removeItem('token');
-  //       }
-  //     });
-
-  //   return ifTokenExist;
-  // }
-
   loginDone() {
-    this.router.navigate(['/dashboard']);
-    alert('Login Successful');
-    console.log('login done');
+    
+    // Swal.fire({
+    //   title: 'Login Successful',
+    //   // html: `
+    //   // <button class="mat-mdc-button">
+    //   // test
+    //   // </button>
+    //   // `,
+      
+    //   icon: 'success',
+    //   // timer: 1000,
+      
+    // }).then(() => {
+    //   this.router.navigate(['/dashboard']);
+    // });
+
+    // alert('Login Successful');
+    // console.log('login done');
   }
 }

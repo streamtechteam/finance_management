@@ -1,1 +1,30 @@
-<p>dialog works!</p>
+<div class="dialog-container">
+    <div mat-dialog-content class="dialog">
+        <h2 mat-dialog-title>{{title}}</h2>
+        
+        <div class="dialog-content">
+            @if (items().length) {
+                <mat-list>
+                    @for (item of items(); track item.id) {
+                        <!-- <mat-list-item>
+                            {{item.name ?? item.phone ?? item.id}}
+                        </mat-list-item> -->
+                        <DialogItem [name]="item.name" [date]="item.date" [id]="item.id"></DialogItem>
+                    }
+
+                </mat-list>
+            } @else {
+                <p class="no-items">No items to display</p>
+            }
+        </div>
+    <!-- [mat-dialog-close]="true" -->
+        <div mat-dialog-actions align="end">
+            <button 
+                mat-button 
+                
+                cdkFocusInitial (click)="onDialogCloseClick()">
+                Close
+            </button>
+        </div>
+    </div>
+</div>

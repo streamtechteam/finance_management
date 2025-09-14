@@ -1,49 +1,43 @@
-<!--
-    <form id="loginForm" [formGroup]="loginForm" (ngSubmit)="getLoginInput()">
-        <div id="LoginSpace">
-
-
-            <label for="inputField"></label>
-            <input class="inputField" formControlName="numberInputField" placeholder="09_________" type="tel">
-            <input class="inputField" formControlName="passwordInputField" placeholder="********" type="tel">
-
-            <button id="loginButton" name="loginButton" type="submit">ورود</button>
-        </div>
-    </form> -->
 
 <form [formGroup]="loginForm" (ngSubmit)="getLoginInput()">
   <div id="LoginSpace">
-                <img alt="logo" id="Logo" src="/user-icon.png">
-            <div id="LoginHint">ورود به پنل کاربری</div>
+    <img alt="logo" id="Logo" src="/user-icon.png" />
+    <div id="LoginHint">Login to your account</div>
     <!-- Inputs with required attribute for HTML/browser accessibility -->
-    <input
-    #numberInputField
-      class="inputField"
-      formControlName="phonenumber"
-      placeholder="09_________"
-      type="tel"
-      required
-    />
-    @if(numberCtrl?.invalid && (numberCtrl?.dirty || numberCtrl?.touched)) {
-        @if(numberCtrl?.hasError('required')) {
+    <span class="input">
+      <mat-form-field appearance="outline" class="inputField">
+        <mat-label>Phone number</mat-label>
+        <input matInput placeholder="+989123456789" formControlName="phonenumber" required />
+        <button matIconButton matSuffix type="button" style="cursor: default;">
+          <mat-icon matSuffix>phonenumber</mat-icon>
 
-        <div class="error">شماره تلفن الزامی است.</div>
-        }
-    }
-
-    <input
-      class="inputField"
-      formControlName="password"
-      placeholder="********"
-      type="password"
-      required
-    />
-    @if(passwordCtrl?.invalid && (passwordCtrl?.dirty || passwordCtrl?.touched)) {
-    @if(passwordCtrl?.hasError('required')) {
-    <div class="error">رمز عبور الزامی است.</div>
-    } }
-
-
-    <button id="loginButton" type="submit" [disabled]="loginForm.invalid">ورود</button>
+        </button>
+        <mat-hint>Enter your phone number</mat-hint>
+      </mat-form-field>
+    </span>
+    <span class="input">
+      <mat-form-field appearance="outline" class="inputField">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder="**********"
+          formControlName="password"
+          required=""
+          [type]="hidePassword() ? 'password' : 'text'"
+        />
+        <button
+          type="button"
+          matIconButton
+          matSuffix
+          (click)="showPasswordClick($event)"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword()"
+        >
+          <mat-icon style="padding-right: 10px;">{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-hint>Enter your password</mat-hint>
+      </mat-form-field>
+    </span>
+    <button   id="loginButton" type="submit" [disabled]="loginForm.invalid" matButton>Login</button>
   </div>
 </form>

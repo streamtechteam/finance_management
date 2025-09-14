@@ -7,7 +7,7 @@ import { HomeComponent } from './features/home/home.component';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/dashboard',
+    redirectTo: '/home',
     pathMatch: 'full',
   },
   {

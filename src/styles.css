@@ -2,3 +2,20 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.material-swal {
+    /* border-radius: 20px; */
+}
+.material-swal .swal2-popup {
+    border-radius: 20px;
+}
+.material-swal .swal2-title {}
+.material-swal .swal2-html-container {}
+.material-swal .swal2-confirm {
+    width: 200px;
+    border: none;
+    /* border-radius: 10px; */
+}
+.material-swal .swal2-cancel {}
+.material-swal .swal2-input {}
+.material-swal .swal2-footer {}

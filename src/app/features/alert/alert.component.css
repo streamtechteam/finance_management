@@ -1,0 +1,63 @@
+.alert-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0 0 16px 0;
+}
+
+.alert-title .icon {
+    font-size: 28px !important;
+}
+
+.alert-title .success {
+    color: #66bb6a;
+}
+
+.alert-title .error {
+    color: #ef5350;
+}
+
+.alert-title .warning {
+    color: #ff9800;
+}
+
+.alert-title .info {
+    color: #2196f3;
+}
+
+.alert-content {
+    min-width: 300px;
+    padding: 8px 0;
+}
+
+.alert-content .message {
+    margin: 0 0 16px 0;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.7);
+    line-height: 1.5;
+}
+
+.input-field {
+    width: 100%;
+}
+
+.alert-actions {
+    padding: 16px 0 0 0;
+}
+
+.alert-actions .confirm-btn {
+    text-transform: uppercase;
+    letter-spacing: 0.08929em;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.alert-actions .cancel-btn {
+    margin-right: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.08929em;
+    font-weight: 500;
+    font-size: 0.875rem;
+}

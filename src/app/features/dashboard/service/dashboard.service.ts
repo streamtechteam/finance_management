@@ -1,6 +1,6 @@
 import { HttpClient, HttpStatusCode } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { DataEditMode, Finance, Project, User } from '../../../shared/data.types';
+import { Injectable, signal } from '@angular/core';
+import { DataEditMode, DialogData, Finance, Project, User } from '../../../shared/data.types';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -8,6 +8,12 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class DashboardService {
+  isDialogOpen = signal<DialogData>({
+    hidden : true,
+    title: '',
+    items: []
+  });
+
   constructor(
     private httpClient: HttpClient,
     private router: Router,
@@ -15,6 +21,7 @@ export class DashboardService {
 
   async dataRequestHandler(mode: DataEditMode) {
     let response: Project | User | Finance | any;
+    let title;
     let token = null;
     if (localStorage.getItem('token') == null) {
       alert('You are not logged in');
@@ -38,19 +45,26 @@ export class DashboardService {
             mode.data,
           ),
         );
+        title = mode.data.type;
         break;
       case 'delete':
         response = await firstValueFrom(
           this.httpClient.delete(`http://localhost:3001/api/${mode.data.type}/${mode.data.id}`),
         );
+        title = mode.data.type;
         break;
       case 'get':
         response = await firstValueFrom(
           this.httpClient.get(`http://localhost:3001/api/${mode.type}`),
         );
+        title = mode.type;
         break;
     }
-    return response;
+    return {
+      responese : response,
+      title : title
+
+    }
   }
   // editData(mode: DataEditMode) {
   //   this.dataRequestHandler(mode).then((res) => {
