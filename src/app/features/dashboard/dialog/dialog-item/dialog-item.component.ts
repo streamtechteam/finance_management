@@ -1,9 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, InputSignal } from '@angular/core';
+import { MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'DialogItem',
-  imports: [DatePipe],
+  imports: [DatePipe , MatIconButton , MatIcon],
   templateUrl: './dialog-item.component.html',
   styleUrl: './dialog-item.component.css'
 })
