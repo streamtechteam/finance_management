@@ -55,6 +55,8 @@ mat-dialog-actions {
 }
 
 h2 {
+    font-size: 1.5rem;
+    font-weight: 550 ;
     margin: 0;
-    padding: 24px 24px 0;
+    padding: 10px 10px 0;
 }
