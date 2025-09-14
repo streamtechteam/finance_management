@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-material-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.css'],
-  imports: [MatDialogContent , MatIcon , MatFormField , MatDialogActions , MatDialogClose , MatButtonModule],
+  imports: [MatDialogContent , MatIcon , MatFormField , MatDialogActions , MatDialogClose ],
 })
 export class MaterialAlertComponent {
   @ViewChild('inputField', { static: false }) inputField!: ElementRef<HTMLInputElement>;
