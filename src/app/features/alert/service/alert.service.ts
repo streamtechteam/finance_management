@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MaterialAlertComponent } from '../components/material-alert/material-alert.component';
-import { AlertConfig } from '../models/alert-config.model';
+import { MaterialAlertComponent } from '../alert.component';
+import { AlertConfig } from '../../../shared/alert.interface';
 
 export interface AlertResult {
   isConfirmed: boolean;

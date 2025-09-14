@@ -6,6 +6,7 @@ import { FormDataType, LoginResponse } from '../../../shared/data.types';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
+import { MaterialAlertService } from '../../alert/service/alert.service';
 
 
 @Injectable({ providedIn: 'root' })
@@ -13,6 +14,7 @@ export class AuthService {
   constructor(
     private router: Router,
     private httpClient: HttpClient,
+    private materialAlert: MaterialAlertService,
   ) {}
 
   verifyLogin(formData: FormDataType) {
@@ -57,7 +59,12 @@ export class AuthService {
   }
 
   loginDone() {
-    
+    this.materialAlert.success('Login Successful' , 'Login Successful').subscribe((res) => {
+      console.log(res);
+      if (res.isConfirmed) {
+        this.router.navigate(['/dashboard']);
+      }
+    });
     // Swal.fire({
     //   title: 'Login Successful',
     //   // html: `
