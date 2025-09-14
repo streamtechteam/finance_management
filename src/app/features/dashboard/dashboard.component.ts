@@ -35,7 +35,7 @@ export class DashboardComponent {
   onEditData(mode: DataEditMode) {
     this.dashboardService.dataRequestHandler(mode).then((res) => {
       console.log(res);
-      this.dashboardService.statusCodeHandler(res?.responese.status, alert);
+      this.dashboardService.statusCodeHandler(res?.responese.status, console.log);
       this.dashboardService.openDialog({
         title: res?.title!.at(0)?.toUpperCase()! + res?.title!.slice(1 , res?.title?.length), 
         items: res?.responese.data,
