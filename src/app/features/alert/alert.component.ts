@@ -1,11 +1,14 @@
 import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { AlertConfig } from '../../shared/alert.interface';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField } from '@angular/material/input';
 
 @Component({
   selector: 'app-material-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.css'],
+  imports: [MatDialogContent , MatIcon , MatFormField , MatDialogActions , MatDialogClose],
 })
 export class MaterialAlertComponent {
   @ViewChild('inputField', { static: false }) inputField!: ElementRef<HTMLInputElement>;
