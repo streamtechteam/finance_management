@@ -28,7 +28,7 @@
 <mat-dialog-actions align="end" class="alert-actions">
     @if (data.showCancelButton) {
         <button
-            mat-button
+            matButton="elevated"
             [mat-dialog-close]="false"
             class="mat-primary"
             class="cancel-btn"
@@ -38,11 +38,11 @@
     }
 
     <button
-        matFlatButton
+        matButton="elevated"
         [mat-dialog-close]="true"
         cdkFocusInitial
-        class="confirm-btn "
-        [classList]="[getButtonColor(), 'confirm-btn']"
+
+        [classList]="[`mat-primary`, 'confirm-btn']"
         (click)="onConfirm()"
     >
         {{ data.confirmButtonText || 'OK' }}
