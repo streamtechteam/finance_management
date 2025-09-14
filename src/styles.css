@@ -13,4 +13,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* Optional: backdrop color */
 .mat-mdc-dialog-backdrop {
     background-color: rgba(0, 0, 0, 0.4) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
 }
