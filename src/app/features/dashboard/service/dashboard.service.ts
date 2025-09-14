@@ -19,6 +19,32 @@ export class DashboardService {
     private router: Router,
   ) {}
 
+ private openDialog(config: AlertConfig): Observable<AlertResult> {
+    return this.dialog
+      .open(MaterialAlertComponent, {
+        data: config,
+        width: '400px',
+        maxWidth: '95vw',
+        disableClose: false,
+        autoFocus: false,
+      })
+      .afterClosed()
+      .pipe(
+        map((result) => {
+          // If user clicks confirm → result = input value (or true if no input)
+          // If user cancels or closes → result = false
+          if (result === undefined || result === false) {
+            return { isConfirmed: false };
+          }
+          return {
+            isConfirmed: true,
+            value: typeof result === 'string' ? result : null,
+          };
+        })
+      );
+  }
+
+
   async dataRequestHandler(mode: DataEditMode) {
     let response: Project | User | Finance | any;
     let title;

@@ -23,7 +23,7 @@ export class MaterialAlertService {
         width: '400px',
         maxWidth: '95vw',
         disableClose: false,
-        autoFocus: true,
+        autoFocus: false,
       })
       .afterClosed()
       .pipe(
