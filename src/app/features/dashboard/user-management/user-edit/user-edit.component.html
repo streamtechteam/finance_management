@@ -1,6 +1,6 @@
 <!-- Angular Material Standalone Component Template -->
 <div class="form-container">
-  <form class="material-form">
+  <form class="material-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="outline" class="form-field">
       <mat-label>Field One</mat-label>
       <input matInput placeholder="Enter first value" />

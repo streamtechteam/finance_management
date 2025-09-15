@@ -12,5 +12,5 @@ import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/i
   styleUrl: './user-edit.component.css'
 })
 export class UserEditComponent {
-  
+  userForm = new FormGroup({
 }
