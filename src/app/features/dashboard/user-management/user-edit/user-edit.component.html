@@ -25,10 +25,17 @@
       <mat-icon matSuffix>edit</mat-icon>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="form-field">
+    <!-- <mat-form-field appearance="outline" class="form-field">
       <mat-label>Role</mat-label>
       <input matInput placeholder="Role" formControlName="role" />
       <mat-icon matSuffix>edit</mat-icon>
+    </mat-form-field> -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Role</mat-label>
+      <mat-select>
+        <mat-option value="user">User</mat-option>
+        <mat-option value="admin">Admin</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <div class="button-container">

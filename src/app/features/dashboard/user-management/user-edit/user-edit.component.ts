@@ -3,13 +3,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { MatOption, MatSelect } from '@angular/material/select';
 import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
   selector: 'app-user-edit',
-  imports: [MatFormField, MatIcon, MatLabel, MatButton, ReactiveFormsModule, MatInput , MatSuffix] ,
+  imports: [MatFormField, MatIcon, MatLabel, MatButton, ReactiveFormsModule, MatInput , MatSuffix , MatSelect , MatOption] ,
   templateUrl: './user-edit.component.html',
   styleUrl: './user-edit.component.css'
 })
@@ -31,6 +32,7 @@ export class UserEditComponent {
       }).then((res) => {
         console.log(res);
         this.userForm.patchValue(res?.responese?.users.find((u: { id: string | null; }) => u.id === params.get('id')));
+        this.userForm.controls.role.setValue(res?.responese?.users.find((u: { id: string | null; }) => u.id === params.get('id'))?.role);
       });
       
     });
