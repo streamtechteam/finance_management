@@ -18,7 +18,7 @@ export class UserEditComponent {
   userForm = new FormGroup({
     name: new FormControl('' , [Validators.required , Validators.minLength(2)]),
     last_name: new FormControl('' , [Validators.required , Validators.minLength(2)]), 
-    phone: new FormControl('' , [Validators.required , Validators.pattern('^[0-9]*$')]),
+    phone: new FormControl('' , [Validators.required , Validators.pattern('^[+]*[0-9]*$')]),
     password: new FormControl('' , [Validators.required , Validators.minLength(6)]),
     role: new FormControl('' , [Validators.required , Validators.pattern("admin|user")]),
   });
@@ -32,7 +32,6 @@ export class UserEditComponent {
       }).then((res) => {
         console.log(res);
         this.userForm.patchValue(res?.responese?.users.find((u: { id: string | null; }) => u.id === params.get('id')));
-        this.userForm.controls.role.setValue(res?.responese?.users.find((u: { id: string | null; }) => u.id === params.get('id'))?.role);
       });
       
     });
