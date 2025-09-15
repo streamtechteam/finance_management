@@ -14,18 +14,14 @@ import { DataDialogConfig } from '../../../shared/dataDialog.interface';
 })
 export class DashboardService {
   isDialogOpen = signal<DialogData>({
-    hidden : true,
+    hidden: true,
     title: '',
-    items: []
+    items: [],
   });
 
-  constructor(
-    private httpClient: HttpClient,
-    private router: Router,
-    private dialog: MatDialog
-  ) {}
+  constructor(private httpClient: HttpClient, private router: Router, private dialog: MatDialog) {}
 
- public openDialog(config: DataDialogConfig): Observable<AlertResult> {
+  public openDialog(config: DataDialogConfig): Observable<AlertResult> {
     return this.dialog
       .open(DialogComponent, {
         data: config,
@@ -50,68 +46,63 @@ export class DashboardService {
       );
   }
 
+  async dataRequestHandler(mode: DataEditMode) : Promise<any> {
+    try {
+      let response: Project | User | Finance | any;
+      let title;
+      let token = null;
+      if (this.checkIfTokenExist() == false) {
+        alert('You are not logged in');
+        this.router.navigate(['home']);
 
-  async dataRequestHandler(mode: DataEditMode) {
-    let response: Project | User | Finance | any;
-    let title;
-    let token = null;
-    if (localStorage.getItem('token') == null) {
-      alert('You are not logged in');
-      this.router.navigate(['home']);
-      //TODO: redirect to login page
-      return;
-    } else {
-      token = localStorage.getItem('token');
-    }
+        return;
+      } else {
+        token = localStorage.getItem('token');
+      }
 
-    switch (mode.mode) {
-      case 'add':
-        response = await firstValueFrom(
-          this.httpClient.post(`http://localhost:3001/api/${mode.data.type}`, mode.data),
-        );
-        break;
-      case 'edit':
-        response = await firstValueFrom(
-          this.httpClient.put(
-            `http://localhost:3001/api/${mode.data.type}/${mode.data.id}`,
-            mode.data,
-          ),
-        );
-        title = mode.data.type;
-        break;
-      case 'delete':
-        response = await firstValueFrom(
-          this.httpClient.delete(`http://localhost:3001/api/${mode.data.type}/${mode.data.id}`),
-        );
-        title = mode.data.type;
-        break;
-      case 'get':
-        response = await firstValueFrom(
-          this.httpClient.get(`http://localhost:3001/api/${mode.type}`),
-        );
-        title = mode.type;
-        break;
-    }
-    return {
-      responese : response,
-      title : title
-
+      switch (mode.mode) {
+        case 'add':
+          response = await firstValueFrom(
+            this.httpClient.post(`http://localhost:3001/api/${mode.data.type}`, mode.data)
+          );
+          break;
+        case 'edit':
+          response = await firstValueFrom(
+            this.httpClient.put(
+              `http://localhost:3001/api/${mode.data.type}/${mode.data.id}`,
+              mode.data
+            )
+          );
+          title = mode.data.type;
+          break;
+        case 'delete':
+          response = await firstValueFrom(
+            this.httpClient.delete(`http://localhost:3001/api/${mode.data.type}/${mode.data.id}`)
+          );
+          title = mode.data.type;
+          break;
+        case 'get':
+          response = await firstValueFrom(
+            this.httpClient.get(`http://localhost:3001/api/${mode.type}`)
+          );
+          title = mode.type;
+          break;
+      }
+      return {
+        responese: response,
+        title: title,
+      };
+    } catch (e: any) {
+      console.log('Error : ' + e.message);
     }
   }
-  // editData(mode: DataEditMode) {
-  //   this.dataRequestHandler(mode).then((res) => {
-  //     return res;
-  //     // this.statusCodeHandler(res.status, alert);
-  //   });
-  //   // return
-  // }
-
+  
   statusCodeHandler(code: HttpStatusCode, alertFunc: Function) {
     // friendly advice :
     // dont try to understand this variable , you may lost a lot of brain cells , it just works
     let status = Object.keys(HttpStatusCode).slice(
       Object.keys(HttpStatusCode).length / 2,
-      Object.keys(HttpStatusCode).length,
+      Object.keys(HttpStatusCode).length
     )[
       Object.keys(HttpStatusCode)
         .slice(0, Object.keys(HttpStatusCode).length / 2)
@@ -140,9 +131,5 @@ export class DashboardService {
   checkIfTokenExist() {
     return localStorage.getItem('token') != null;
     // this.editData()
-  }
-
-  async checkIfTokenIsValid() {
-    return;
   }
 }

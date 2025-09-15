@@ -1,1 +1,61 @@
-<p>user-management works!</p>
+<!-- Angular Material Standalone Component Template - Items List -->
+<div class="list-container">
+  <div class="list-header">
+    <h2>Users List</h2>
+    <button mat-button class="action-button" routerLink="/dashboard/users/add">
+      <mat-icon>add</mat-icon>
+      Add User
+    </button>
+  </div>
+
+  <mat-card class="list-card">
+    <mat-list>
+      <div class="list-item-header">
+        <span class="col-id">ID</span>
+        <span class="col-name">Name</span>
+        <span class="col-lastname">Last Name</span>
+        <span class="col-phone">Phone Number</span>
+        <span class="col-role">Role</span>
+        <span class="col-actions">Actions</span>
+      </div>
+
+      <!-- Repeat this div for each item in your data -->
+       @for (user of users; track $index) {
+      <div class="list-item">
+        <span class="col-id">{{user.id}}</span>
+        <span class="col-name">{{user.name}}</span>
+        <span class="col-lastname">{{user.last_name}}</span>
+        <span class="col-phone">{{user.phone}}</span>
+        <span class="col-role">{{user.role}}</span>
+        <span class="col-actions">
+          <button mat-icon-button aria-label="Edit" routerLink="/dashboard/users/{{user.id}}">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button aria-label="Delete" routerLink="/dashboard/users/{{user.id}}">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </span>
+      </div>
+       }
+
+
+      <!-- <div class="list-item">
+        <span class="col-id">2</span>
+        <span class="col-name">Jane</span>
+        <span class="col-lastname">Smith</span>
+        <span class="col-phone">+1 (555) 987-6543</span>
+        <span class="col-role">User</span>
+        <span class="col-actions">
+          <button matIconButton aria-label="Edit">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button matIconButton aria-label="Delete">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </span>
+      </div> -->
+
+      <!-- Add more items as needed -->
+    </mat-list>
+  </mat-card>
+</div>

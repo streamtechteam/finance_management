@@ -23,32 +23,6 @@ function loadDB() {
   try {
     if (!fs.existsSync(DB_PATH)) {
       const initialData = {
-        // users: [
-        //   {
-        //     id: nanoid(8),
-        //     phone: '+1234567890',
-        //     password: 'admin123',
-        //     role: 'admin',
-        //     name: 'Alice',
-        //     last_name: 'Adminson'
-        //   },
-        //   {
-        //     id: nanoid(8),
-        //     phone: '+0987654321',
-        //     password: 'user123',
-        //     role: 'user',
-        //     name: 'Bob',
-        //     last_name: 'Userman'
-        //   },
-        //   {
-        //     id: nanoid(8),
-        //     phone: '+1122334455',
-        //     password: 'user456',
-        //     role: 'user',
-        //     name: 'Carol',
-        //     last_name: 'Client'
-        //   }
-        // ],
         users: [
           { id: nanoid(8), name: 'Taha', last_name: 'Moosavi', phone: '+1234567890', password: 'admin123', role: 'admin' },
           { id: nanoid(8), name: 'Ehsan', last_name: 'Hopeful', phone: '+0987654321', password: 'user123', role: 'user' },
@@ -190,7 +164,7 @@ app.get('/api/me', authenticateToken, (req, res) => {
 app.get('/api/users', authenticateToken, requireAdmin, (req, res) => {
   res.status(200).json({
     status: 200,
-    users: users.map(({ ...user }) => user)
+    data: users.map(({ ...user }) => user)
   });
 });
 
@@ -271,7 +245,7 @@ app.delete('/api/users/:id', authenticateToken, requireAdmin, (req, res) => {
 app.get('/api/projects', authenticateToken, (req, res) => {
   res.status(200).json({
     status: 200,
-    projects
+    data : projects
   });
 });
 
@@ -351,7 +325,7 @@ app.delete('/api/projects/:id', authenticateToken, (req, res) => {
 app.get('/api/finances', authenticateToken, (req, res) => {
   res.status(200).json({
     status: 200,
-    finances
+    data :finances
   });
 });
 

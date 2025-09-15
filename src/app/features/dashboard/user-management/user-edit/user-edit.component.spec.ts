@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserEdit } from './user-edit';
+import { UserEditComponent as UserEdit } from './user-edit.component';
 
 describe('UserEdit', () => {
   let component: UserEdit;

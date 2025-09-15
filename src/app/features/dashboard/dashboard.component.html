@@ -32,7 +32,7 @@
 				<button matButton>Edit Finance</button>
 			}
 		</div>
-
+		@if (this.isAdmin) {
 		<div class="dashboard-card">
 			<h2>Users</h2>
 			<ul>
@@ -40,22 +40,30 @@
 				<li>User 2 (placeholder)</li>
 				<li>User 3 (placeholder)</li>
 			</ul>
-			<button (click)="onEditData({mode: 'get', type: 'users'})" matButton>View All Users</button>
-			@if (this.canEditUsers) {
+			
+			<button
+			routerLink="/dashboard/users"
+			matButton>View All Users</button>
+			
+
+			<!-- @if (this.canEditUsers) {
 				<button matButton>Edit Users</button>
-			}
+			} -->
 		</div>
+		}
 	</div>
 
 	<section class="dashboard-features">
 		<h2>Quick Actions</h2>
 		<div class="dashboard-actions">
 			<!-- Add Project only for admin -->
+			<button matButton>Add Project</button>
 			@if (this.isAdmin) {
-				<button matButton>Add Project</button>
+				<button matButton>Generate Report</button>
 			}
-			<button matButton>Add User</button>
-			<button matButton>Generate Report</button>
+			@if (this.canEditUsers) {
+				<button matButton>Add User</button>
+			}
 		</div>
 		<h2>Recent Activity</h2>
 		<ul>

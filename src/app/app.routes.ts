@@ -12,33 +12,41 @@ export const routes: Routes = [
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',
+    title: 'Finance Management',
   },
   {
     path: 'dashboard',
     component: DashboardComponent,
+    title: 'Dashboard',
   },
   {
     path: 'dashboard/users',
     component: UserManagementComponent,
+    title: 'User Management',
   },
   {
     path: 'dashboard/users/add',
-    component:UserAddComponent
+    component:UserAddComponent,
+    title: 'Add User',
   },
   {
     path: 'dashboard/users/:id',
-    component: UserEditComponent
+    component: UserEditComponent,
+    title: 'Edit User',
   },
   {
     path: 'login',
     component: LoginComponent,
+    title: 'Login',
   },
   {
     path: 'home',
     component: HomeComponent,
+    title: 'Home',
   },
   {
     path: '**',
     component: NotFoundComponent,
+    title: '404',
   },
 ];

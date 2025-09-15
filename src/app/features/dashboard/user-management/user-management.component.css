@@ -1,0 +1,197 @@
+/* Component Styles */
+.list-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.list-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+/* .action-button {
+    background-color: #1976d2;
+    color: white;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.02857em;
+} */
+
+/* .action-button:hover {
+    background-color: #1565c0;
+} */
+
+.action-button mat-icon {
+    margin-right: 8px;
+}
+
+.list-card {
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.list-item-header {
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr 1fr 1fr 120px;
+    padding: 16px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: 500;
+    color: #555;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.list-item {
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr 1fr 1fr 120px;
+    padding: 16px;
+    border-bottom: 1px solid #eeeeee;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.list-item:hover {
+    background-color: #f9f9f9;
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+.col-id {
+    font-weight: 500;
+    color: #333;
+}
+
+.col-name,
+.col-lastname,
+.col-phone,
+.col-role {
+    color: #333;
+    word-break: break-word;
+}
+
+.col-phone {
+    font-family: 'Courier New', monospace;
+}
+
+.col-role {
+    text-transform: capitalize;
+}
+
+.col-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.col-actions button {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .col-actions button:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+} */
+
+/* Responsive Design */
+@media (max-width: 960px) {
+
+    .list-item-header,
+    .list-item {
+        grid-template-columns: 50px 1fr 1fr 1fr 100px;
+    }
+
+    .col-lastname {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .list-container {
+        padding: 1rem;
+    }
+
+    .list-item-header,
+    .list-item {
+        grid-template-columns: 1fr 1fr 80px;
+        grid-template-areas:
+            "id name actions"
+            "phone phone phone"
+            "role role role";
+    }
+
+    .col-id {
+        grid-area: id;
+    }
+
+    .col-name {
+        grid-area: name;
+    }
+
+    .col-lastname {
+        display: none;
+    }
+
+    .col-phone {
+        grid-area: phone;
+        padding-top: 8px;
+    }
+
+    .col-role {
+        grid-area: role;
+    }
+
+    .col-actions {
+        grid-area: actions;
+        justify-content: flex-end;
+    }
+
+    .list-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .action-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .list-item-header,
+    .list-item {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "id"
+            "name"
+            "phone"
+            "role"
+            "actions";
+    }
+
+    .col-actions {
+        padding-top: 8px;
+        justify-content: flex-start;
+    }
+}

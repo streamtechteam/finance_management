@@ -22,7 +22,11 @@ export class DashboardComponent {
     private router: Router,
     private dashboardService: DashboardService,
   ) {
+    try{
     dashboardService.dataRequestHandler({ mode: 'get', type: 'me' }).then((res) => {
+      if ( res?.responese == null ){
+        router.navigate(['/home']);
+      }
       let user = res?.responese as User;
       console.log(user.role);
       this.isAdmin = user.role === 'admin';
@@ -31,9 +35,14 @@ export class DashboardComponent {
       this.canEditProjects = user.role === 'admin';
       console.log(this.isAdmin);
     });
+    }catch(e){
+      console.log(e);
+    }
+
   }
   onEditData(mode: DataEditMode) {
     this.dashboardService.dataRequestHandler(mode).then((res) => {
+      // if ()
       console.log(res);
       this.dashboardService.statusCodeHandler(res?.responese.status, console.log);
       this.dashboardService.openDialog({
