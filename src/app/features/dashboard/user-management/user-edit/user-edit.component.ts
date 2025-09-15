@@ -14,10 +14,10 @@ import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/i
 export class UserEditComponent {
   userForm = new FormGroup({
     name: new FormControl('' , [Validators.required , Validators.minLength(2)]),
-    last_name: new FormControl(''),
-    phone: new FormControl(''),
-    password: new FormControl(''),
-    role: new FormControl(''),
+    last_name: new FormControl('' , [Validators.required , Validators.minLength(2)]), 
+    phone: new FormControl('' , [Validators.required , Validators.pattern('^[0-9]*$')]),
+    password: new FormControl('' , [Validators.required , Validators.minLength(6)]),
+    role: new FormControl('' , [Validators.required , Validators.pattern("admin | user")]),
   });
   constructor(private formBuilder: FormBuilder) {
 
