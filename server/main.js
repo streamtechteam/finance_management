@@ -22,8 +22,8 @@ function loadDB() {
     if (!fs.existsSync(DB_PATH)) {
       const initialData = {
         users: [
-          { id: nanoid(8), name:'Taha' , lastname:'', phone: '+1234567890', password: 'admin123', role: 'admin' },
-          { id: nanoid(8), name:'Mamad' , lastname:'', phone: '+0987654321', password: 'user123', role: 'user' },
+          { id: nanoid(8), name:'Taha' , lastname:'Moosavi', phone: '+1234567890', password: 'admin123', role: 'admin' },
+          { id: nanoid(8), name:'Ehsan' , lastname:'Hopeful', phone: '+0987654321', password: 'user123', role: 'user' },
           { id: nanoid(8), name:'Mobina' , lastname:'Khodabandeh', phone: '+1122334455', password: 'user456', role: 'user' },
         ],
 
@@ -150,14 +150,14 @@ app.post('/api/login', (req, res) => {
     });
   }
 
-  const token = jwt.sign({ id: user.id, phone: user.phone, role: user.role }, JWT_SECRET, {
+  const token = jwt.sign({ id: user.id, phone: user.phone, role: user.role , name: user.name, lastname: user.lastname }, JWT_SECRET, {
     expiresIn: '1h',
   });
 
   res.status(200).json({
     status: 200,
     token,
-    user: { id: user.id, phone: user.phone, role: user.role },
+    user: { id: user.id, phone: user.phone, role: user.role , name: user.name, lastname: user.lastname },
   });
 });
 
