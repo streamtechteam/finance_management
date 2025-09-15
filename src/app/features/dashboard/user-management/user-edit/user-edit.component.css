@@ -30,7 +30,7 @@
     margin-top: 1rem;
 }
 
-.submit-btn {
+/* .submit-btn {
     background-color: #1976d2;
     color: white;
     border: none;
@@ -50,7 +50,7 @@
 .submit-btn:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.3);
-}
+} */
 
 /* Responsive adjustments */
 @media (max-width: 600px) {

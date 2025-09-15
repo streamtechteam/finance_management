@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatLabel } from '@angular/material/input';
 
 @Component({
   selector: 'app-user-edit',
-  imports: [ MatFormField , MatIcon , MatLabel , MatButton],
+  imports: [ MatFormField , MatIcon , MatLabel , MatButton , ReactiveFormsModule],
   templateUrl: './user-edit.component.html',
   styleUrl: './user-edit.component.css'
 })
