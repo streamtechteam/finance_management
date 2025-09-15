@@ -16,22 +16,18 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
-    children: [
-      {
-        path: 'dashboard/users',
-        component: UserManagementComponent,
-        children: [
-          {
-            path: 'dashboard/users/add',
-            component: UserAddComponent,
-          },
-        ],
-      },
-      {
-        path: 'dashboard/users/:id',
-        component: UserEditComponent,
-      },
-    ],
+  },
+  {
+    path: 'dashboard/users',
+    component: UserManagementComponent,
+  },
+  {
+    path: 'dashboard/users/add',
+    component:UserAddComponent
+  },
+  {
+    path: 'dashboard/users/:id',
+    component: UserEditComponent
   },
   {
     path: 'login',
