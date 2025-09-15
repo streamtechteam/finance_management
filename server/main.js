@@ -190,7 +190,7 @@ app.get('/api/me', authenticateToken, (req, res) => {
 app.get('/api/users', authenticateToken, requireAdmin, (req, res) => {
   res.status(200).json({
     status: 200,
-    ...users.map(({ password, ...user }) => user)
+    users: users.map(({ password, ...user }) => user)
   });
 });
 

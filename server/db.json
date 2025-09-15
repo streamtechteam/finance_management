@@ -1,19 +1,25 @@
 {
   "users": [
     {
-      "id": "v2YKejY3",
+      "id": "b56stBjI",
+      "name": "Taha",
+      "last_name": "Moosavi",
       "phone": "+1234567890",
       "password": "admin123",
       "role": "admin"
     },
     {
-      "id": "BvWQYknF",
+      "id": "oWMGIh0m",
+      "name": "Ehsan",
+      "last_name": "Hopeful",
       "phone": "+0987654321",
       "password": "user123",
       "role": "user"
     },
     {
-      "id": "2FS0UbVl",
+      "id": "VonzUkJD",
+      "name": "Mobina",
+      "last_name": "Khodabandeh",
       "phone": "+1122334455",
       "password": "user456",
       "role": "user"
@@ -21,38 +27,38 @@
   ],
   "projects": [
     {
-      "id": "g1T3FUp1",
+      "id": "6VzcDe60",
       "name": "Project Alpha",
       "description": "First project",
       "budget": 50000,
-      "owner": "v2YKejY3"
+      "owner": "b56stBjI"
     },
     {
-      "id": "a9UUln2d",
+      "id": "7lI-8QIi",
       "name": "Project Beta",
       "description": "Second project",
       "budget": 75000,
-      "owner": "BvWQYknF"
+      "owner": "oWMGIh0m"
     }
   ],
   "finances": [
     {
-      "id": "oOf-BvqB",
-      "project_id": "g1T3FUp1",
+      "id": "91USMcQK",
+      "project_id": "6VzcDe60",
       "amount": 25000,
       "category": "Development",
       "date": "2024-01-15"
     },
     {
-      "id": "ffyP9I8W",
-      "project_id": "g1T3FUp1",
+      "id": "95TT5u3Y",
+      "project_id": "6VzcDe60",
       "amount": 15000,
       "category": "Marketing",
       "date": "2024-02-01"
     },
     {
-      "id": "wN-99tjI",
-      "project_id": "a9UUln2d",
+      "id": "RPv0dkMX",
+      "project_id": "7lI-8QIi",
       "amount": 30000,
       "category": "Design",
       "date": "2024-01-20"

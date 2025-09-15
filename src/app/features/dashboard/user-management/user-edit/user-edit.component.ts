@@ -30,7 +30,7 @@ export class UserEditComponent {
         type: "users",
       }).then((res) => {
         console.log(res);
-        this.userForm.patchValue(res?.data?.find(u => u.id === params.get('id')));
+        this.userForm.patchValue(res?.responese?.users.find((u: { id: string | null; }) => u.id === params.get('id')));
       });
       
     });
