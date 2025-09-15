@@ -19,7 +19,7 @@ export class UserEditComponent {
     last_name: new FormControl('' , [Validators.required , Validators.minLength(2)]), 
     phone: new FormControl('' , [Validators.required , Validators.pattern('^[0-9]*$')]),
     password: new FormControl('' , [Validators.required , Validators.minLength(6)]),
-    role: new FormControl('' , [Validators.required , Validators.pattern("admin | user")]),
+    role: new FormControl('' , [Validators.required , Validators.pattern("admin|user")]),
   });
   constructor(private formBuilder: FormBuilder , private router: ActivatedRoute , private dashboardService: DashboardService) {
 
