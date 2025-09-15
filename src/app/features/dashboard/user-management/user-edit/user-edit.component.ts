@@ -1,8 +1,10 @@
+import { DashboardService } from './../../service/dashboard.service';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -19,10 +21,20 @@ export class UserEditComponent {
     password: new FormControl('' , [Validators.required , Validators.minLength(6)]),
     role: new FormControl('' , [Validators.required , Validators.pattern("admin | user")]),
   });
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder , private router: ActivatedRoute , private dashboardService: DashboardService) {
 
-
-    console.log();
+    router.paramMap.subscribe(params => {
+      // console.log(params.get('id'));
+      this.dashboardService.dataRequestHandler({
+        mode: 'get',
+        type: "users",
+      }).then((res) => {
+        console.log(res);
+        this.userForm.patchValue(res?.data?.find(u => u.id === params.get('id')));
+      });
+      
+    });
+    // console.log();
 
     // this.userForm = this.formBuilder.group({
     //   name: ['', Validators.required],
