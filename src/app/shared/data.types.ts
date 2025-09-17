@@ -1,9 +1,10 @@
 export type DataEditMode = AddMode | UpdateMode | DeleteMode | GetMode;
 export type GetMode = { mode: 'get'; type: DataType };
-export type AddMode = { mode: 'add'; data: { name: string; type: DataType } };
-export type UpdateMode = { mode: 'edit'; data: { data : User | Project | Finance | any; type: DataType } };
-export type DeleteMode = { mode: 'delete'; data: { id: string; type: DataType } };
+export type AddMode = { mode: 'add'; data: User | Project | Finance; type: DataType };
+export type UpdateMode = { mode: 'edit'; data : User | Project | Finance; type: DataType  };
+export type DeleteMode = { mode: 'delete'; id: string; type: DataType };
 export type DataType = 'projects' | 'finances' | 'users' | 'me';
+export type EditDataType = 'projects' | 'finances' | 'users';
 
 export type FormDataType = {
   phonenumber: string;
@@ -28,9 +29,10 @@ export type Finance = {
 
 export type User = {
 
+  id: string;
   name: string;
   last_name: string;
-  id: string;
+  password: string;
   phone: string;
   role: string;
 };

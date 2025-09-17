@@ -63,23 +63,23 @@ export class DashboardService {
       switch (mode.mode) {
         case 'add':
           response = await firstValueFrom(
-            this.httpClient.post(`http://localhost:3001/api/${mode.data.type}`, mode.data)
+            this.httpClient.post(`http://localhost:3001/api/${mode.type}`, mode.data)
           );
           break;
         case 'edit':
           response = await firstValueFrom(
             this.httpClient.put(
-              `http://localhost:3001/api/${mode.data.type}/${mode.data.id}`,
+              `http://localhost:3001/api/${mode.type}/${mode.data.id}`,
               mode.data
             )
           );
-          title = mode.data.type;
+          title = mode.type;
           break;
         case 'delete':
           response = await firstValueFrom(
-            this.httpClient.delete(`http://localhost:3001/api/${mode.data.type}/${mode.data.id}`)
+            this.httpClient.delete(`http://localhost:3001/api/${mode.type}/${mode.id}`)
           );
-          title = mode.data.type;
+          title = mode.type;
           break;
         case 'get':
           response = await firstValueFrom(

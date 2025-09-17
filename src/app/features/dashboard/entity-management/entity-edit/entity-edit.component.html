@@ -1,0 +1,60 @@
+<!-- Angular Material Standalone Component Template -->
+<div class="form-container">
+  <form class="material-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    @for (field of fields; track $index) { @if (field.name == 'role') {
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option value="user">User</mat-option>
+        <mat-option value="admin">Admin</mat-option>
+      </mat-select>
+    </mat-form-field>
+    } @else if (field.name == 'password') {
+    <mat-form-field appearance="outline" class="inputField">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        placeholder="**********"
+        formControlName="password"
+        required
+        [type]="hidePassword() ? 'password' : 'text'"
+      />
+      <button
+        type="button"
+        matIconButton
+        matSuffix
+        (click)="showPasswordClick($event)"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hidePassword()"
+      >
+        <mat-icon style="padding-right: 10px">{{
+          hidePassword() ? 'visibility_off' : 'visibility'
+        }}</mat-icon>
+      </button>
+    </mat-form-field>
+    } @else if (field.name == 'date') {
+    <mat-form-field appearance="outline" class="inputField">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="datepicker" formControlName="date" />
+      <mat-datepicker #datepicker />
+      <mat-datepicker-toggle [for]="datepicker" matSuffix />
+    </mat-form-field>
+
+    } @else {
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>{{ field.label }}</mat-label>
+      <input matInput placeholder="{{ field.label }}" formControlName="{{ field.name }}" />
+      @if (mode == "edit") {
+        <mat-icon matSuffix>edit</mat-icon>
+      }
+      @else if (mode == "add") {
+        <mat-icon matSuffix>add</mat-icon>
+      }
+    </mat-form-field>
+
+    } }
+    <div class="button-container">
+      <button matButton type="submit" class="submit-btn">Submit</button>
+    </div>
+  </form>
+</div>

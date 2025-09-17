@@ -3,7 +3,7 @@
 <h2 mat-dialog-title>{{title}}</h2>
 
 <div class="dialog-content">
-    @if (items().length) {
+    @if (items().length > 0) {
         <mat-list>
             @for (item of items(); track item.id) {
                 <!-- <mat-list-item>

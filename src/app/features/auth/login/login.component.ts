@@ -13,13 +13,11 @@ import { FormDataType } from '../../../shared/data.types';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
-import { SwalComponent, SwalDirective } from '@sweetalert2/ngx-sweetalert2';
-import Swal from 'sweetalert2';
 
 @Component({
   standalone: true,
   selector: 'LoginComponent',
-  imports: [ReactiveFormsModule, MatButton, MatInput, MatFormField, MatLabel, MatIcon, MatHint, MatSuffix , MatIconButton , SwalComponent,SwalDirective],
+  imports: [ReactiveFormsModule, MatButton, MatInput, MatFormField, MatLabel, MatIcon, MatHint, MatSuffix , MatIconButton],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })

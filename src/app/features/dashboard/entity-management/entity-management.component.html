@@ -1,43 +1,44 @@
 <!-- Angular Material Standalone Component Template - Items List -->
 <div class="list-container">
   <div class="list-header">
-    <h2>Users List</h2>
-    <button mat-button class="action-button" routerLink="/dashboard/users/add">
+    <h2>{{ type.at(0)?.toUpperCase() + type.slice(1) }} List</h2>
+    <button mat-button class="action-button" [routerLink]="'/dashboard/add/' + type">
       <mat-icon>add</mat-icon>
-      Add User
+      Add {{ type.at(0)?.toUpperCase() + type.slice(1 , -1) }}
     </button>
   </div>
 
   <mat-card class="list-card">
     <mat-list>
       <div class="list-item-header">
-        <span class="col-id">ID</span>
-        <span class="col-name">Name</span>
-        <span class="col-lastname">Last Name</span>
-        <span class="col-phone">Phone Number</span>
-        <span class="col-role">Role</span>
+        @for (field of fields; track $index) {
+        <span class="col-item">{{ field.label }}</span>
+        }
         <span class="col-actions">Actions</span>
       </div>
 
       <!-- Repeat this div for each item in your data -->
-       @for (user of users; track $index) {
-      <div class="list-item">
-        <span class="col-id">{{user.id}}</span>
-        <span class="col-name">{{user.name}}</span>
-        <span class="col-lastname">{{user.last_name}}</span>
-        <span class="col-phone">{{user.phone}}</span>
-        <span class="col-role">{{user.role}}</span>
+      <!-- @if (type == 'users') { -->
+      @for (entity of entities; track $index) {
+        <div class="list-item">
+        @for (field of fields; track $index) {
+          <span class="col-item">{{  entity[field.name]}}</span>
+        } 
+        <!-- <span class="col-name">{{entity.name}}</span>
+            <span class="col-lastname">{{entity.last_name}}</span>
+            <span class="col-phone">{{entity.phone}}</span>
+            <span class="col-role">{{entity.role}}</span> -->
         <span class="col-actions">
-          <button mat-icon-button aria-label="Edit" routerLink="/dashboard/users/{{user.id}}">
+          <button mat-icon-button aria-label="Edit" routerLink="/dashboard/edit/{{ type }}/{{ entity.id }}">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button aria-label="Delete" routerLink="/dashboard/users/{{user.id}}">
+          <button mat-icon-button aria-label="Delete" (click)="onDeleteClick(entity.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </span>
       </div>
-       }
-
+    } 
+    <!-- } @else if (type == 'projects') { } @else if (type == 'finances') { } -->
 
       <!-- <div class="list-item">
         <span class="col-id">2</span>

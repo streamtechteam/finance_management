@@ -1,4 +1,3 @@
-// mock-api.js - Mock API with short UUIDs, phone auth, names, JSON persistence, status codes
 
 const express = require('express');
 const jwt = require('jsonwebtoken');
@@ -17,6 +16,85 @@ const JWT_SECRET = 'mock-secret-for-testing-only';
 
 // DB file path
 const DB_PATH = path.join(__dirname, 'db.json');
+
+// Helper: Validate input data
+function validate(schema, data) {
+  const errors = [];
+
+  for (let field in schema) {
+    const rules = schema[field];
+    let value = data[field];
+    try{
+      // if(isValidDateOrString(value)){
+      //   // console.log(value)
+      //   value = new Date(value);
+      //   value = `${value.getFullYear()}-${(value.getMonth()+1).toString().padStart(2, '0')}-${value.getDate().toString().padStart(2, '0')}`
+      //   console.log(value)
+      // }
+      if (value.match(/^[0-9]+$/g)){
+        value = parseInt(value);
+      }
+    }
+    catch(e){
+    }
+
+    // Required
+    if (rules.required && (value === undefined || value === null || value === '')) {
+      errors.push(`${field} is required`);
+      continue;
+    }
+
+    // Skip further checks if not required and not provided
+    if (value === undefined || value === null) continue;
+
+    // Type check
+    if (rules.type && typeof value !== rules.type) {
+      errors.push(`${field} must be a ${rules.type}`);
+      continue;
+    }
+
+    // Custom validator
+    if (rules.validate && !rules.validate(value)) {
+      
+      errors.push(rules.message || `${field} is invalid`);
+    }
+
+    // Min/Max for numbers
+    if (typeof value === 'number') {
+      if (rules.min !== undefined && value < rules.min) {
+        errors.push(`${field} must be >= ${rules.min}`);
+      }
+      if (rules.max !== undefined && value > rules.max) {
+        errors.push(`${field} must be <= ${rules.max}`);
+      }
+    }
+
+    // String length
+    if (typeof value === 'string') {
+      if (rules.minLength !== undefined && value.length < rules.minLength) {
+        errors.push(`${field} must be at least ${rules.minLength} characters`);
+      }
+      if (rules.maxLength !== undefined && value.length > rules.maxLength) {
+        errors.push(`${field} must be at most ${rules.maxLength} characters`);
+      }
+    }
+  }
+  console.log(errors)
+  return errors.length > 0 ? errors : null;
+}
+
+function isValidDateOrString(value) {
+  if (value instanceof Date) {
+    return !isNaN(value);
+  }
+  if (typeof value === 'string') {
+    const date = new Date(value);
+    return !isNaN(date.getTime()) && value === date.toISOString().slice(0, value.length);
+    // Optional: stricter string format matching
+  }
+  return false;
+}
+
 
 // Load or initialize database
 function loadDB() {
@@ -79,7 +157,7 @@ function persist() {
   saveDB({ users, projects, finances });
 }
 
-// Middleware to verify JWT
+// Middleware to verify JWT + validate user still exists
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -91,14 +169,32 @@ const authenticateToken = (req, res, next) => {
     });
   }
 
-  jwt.verify(token, JWT_SECRET, (err, user) => {
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
     if (err) {
       return res.status(403).json({
         status: 403,
         error: 'Invalid token'
       });
     }
-    req.user = user;
+
+    // ✅ Security Fix: Check if user still exists in database
+    const user = users.find(u => u.id === decoded.id);
+    if (!user) {
+      return res.status(403).json({
+        status: 403,
+        error: 'User not found or deleted'
+      });
+    }
+
+    // Attach full user object to request (excluding password)
+    req.user = {
+      id: user.id,
+      phone: user.phone,
+      role: user.role,
+      name: user.name,
+      last_name: user.last_name
+    };
+
     next();
   });
 };
@@ -116,6 +212,20 @@ const requireAdmin = (req, res, next) => {
 
 // Login endpoint — returns full user info including name/last_name
 app.post('/api/login', (req, res) => {
+  const schema = {
+    phone: { required: true, type: 'string', minLength: 5, maxLength: 20 },
+    password: { required: true, type: 'string', minLength: 3 }
+  };
+
+  const errors = validate(schema, req.body);
+  if (errors) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Validation failed',
+      details: errors
+    });
+  }
+
   const { phone, password } = req.body;
   const user = users.find(u => u.phone === phone && u.password === password);
 
@@ -126,7 +236,7 @@ app.post('/api/login', (req, res) => {
     });
   }
 
-  // Include name & last_name in JWT payload (optional but useful)
+  // Include name & last_name in JWT payload
   const token = jwt.sign(
     {
       id: user.id,
@@ -160,44 +270,66 @@ app.get('/api/me', authenticateToken, (req, res) => {
   });
 });
 
-// Get all users (admin only) — excludes password
+// Get all users (admin only)
 app.get('/api/users', authenticateToken, requireAdmin, (req, res) => {
   res.status(200).json({
     status: 200,
-    data: users.map(({ ...user }) => user)
+    data: users.map(({ ...user }) => user) // exclude password
   });
 });
 
-// Create user (admin only) — now accepts name & last_name
+// Create user (admin only)
 app.post('/api/users', authenticateToken, requireAdmin, (req, res) => {
-  const { phone, password, role, name, last_name } = req.body;
-  if (!phone || !password) {
+  const schema = {
+    phone: {
+      required: true,
+      type: 'string',
+      minLength: 5,
+      validate: (v) => /^[\+\d\-\s\(\)]+$/.test(v),
+      message: 'phone must be a valid phone number format'
+    },
+    password: { required: true, type: 'string', minLength: 6 },
+    name: { required: true, type: 'string', minLength: 1, maxLength: 50 },
+    last_name: { required: true, type: 'string', minLength: 1, maxLength: 50 },
+    role: {
+      required: true,
+      type: 'string',
+      validate: (v) => ['admin', 'user'].includes(v),
+      message: 'role must be "admin" or "user"'
+    }
+  };
+
+  const errors = validate(schema, req.body);
+  if (errors) {
     return res.status(400).json({
       status: 400,
-      error: 'Phone and password are required'
+      error: 'Validation failed',
+      details: errors
     });
   }
+
+  const { phone, password, name, last_name, role } = req.body;
   const newUser = {
     id: nanoid(8),
     phone,
     password,
-    role: role || 'user',
-    name: name || '',
-    last_name: last_name || ''
+    name,
+    last_name,
+    role
   };
+
   users.push(newUser);
   persist();
+
+  // Return without password
+  const { password: _, ...userWithoutPassword } = newUser;
   res.status(201).json({
     status: 201,
-    id: newUser.id,
-    phone: newUser.phone,
-    role: newUser.role,
-    name: newUser.name,
-    last_name: newUser.last_name
+    ...userWithoutPassword
   });
 });
 
-// Update user (admin only) — can update name & last_name
+// Update user (admin only)
 app.put('/api/users/:id', authenticateToken, requireAdmin, (req, res) => {
   const id = req.params.id;
   const userIndex = users.findIndex(u => u.id === id);
@@ -209,21 +341,56 @@ app.put('/api/users/:id', authenticateToken, requireAdmin, (req, res) => {
     });
   }
 
-  users[userIndex] = { ...users[userIndex], ...req.body };
+  // Define partial update schema
+  const schema = {
+    phone: {
+      type: 'string',
+      minLength: 5,
+      validate: (v) => /^[\+\d\-\s\(\)]+$/.test(v),
+      message: 'phone must be a valid phone number format'
+    },
+    password: { type: 'string', minLength: 6 },
+    name: { type: 'string', minLength: 1, maxLength: 50 },
+    last_name: { type: 'string', minLength: 1, maxLength: 50 },
+    role: {
+      type: 'string',
+      validate: (v) => ['admin', 'user'].includes(v),
+      message: 'role must be "admin" or "user"'
+    }
+  };
+
+  const errors = validate(schema, req.body);
+  if (errors) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Validation failed',
+      details: errors
+    });
+  }
+
+  // Prevent updating ID or other sensitive fields
+  const { id: _id, ...allowedFields } = req.body;
+  users[userIndex] = { ...users[userIndex], ...allowedFields };
   persist();
+
+  const { password: __, ...userWithoutPassword } = users[userIndex];
   res.status(200).json({
     status: 200,
-    id: users[userIndex].id,
-    phone: users[userIndex].phone,
-    role: users[userIndex].role,
-    name: users[userIndex].name,
-    last_name: users[userIndex].last_name
+    ...userWithoutPassword
   });
 });
 
-// Delete user (admin only)
+// Delete user (admin only) - cannot delete self
 app.delete('/api/users/:id', authenticateToken, requireAdmin, (req, res) => {
   const id = req.params.id;
+
+  if (req.user.id === id) {
+    return res.status(400).json({
+      status: 400,
+      error: 'You cannot delete yourself'
+    });
+  }
+
   const initialLength = users.length;
   users = users.filter(u => u.id !== id);
 
@@ -245,12 +412,28 @@ app.delete('/api/users/:id', authenticateToken, requireAdmin, (req, res) => {
 app.get('/api/projects', authenticateToken, (req, res) => {
   res.status(200).json({
     status: 200,
-    data : projects
+    data: projects
   });
 });
 
 // Create project
 app.post('/api/projects', authenticateToken, (req, res) => {
+  console.log(req.body)
+  const schema = {
+    name: { required: true, type: 'string', minLength: 1, maxLength: 100 },
+    description: { type: 'string', maxLength: 500 },
+    budget: { required: true, type: 'number', min: 0, max: 999999999 }
+  };
+
+  const errors = validate(schema, req.body);
+  if (errors) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Validation failed',
+      details: errors
+    });
+  }
+
   const { name, description, budget } = req.body;
   const newProject = {
     id: nanoid(8),
@@ -259,8 +442,10 @@ app.post('/api/projects', authenticateToken, (req, res) => {
     budget,
     owner: req.user.id
   };
+
   projects.push(newProject);
   persist();
+
   res.status(201).json({
     status: 201,
     ...newProject
@@ -286,8 +471,26 @@ app.put('/api/projects/:id', authenticateToken, (req, res) => {
     });
   }
 
-  projects[projectIndex] = { ...projects[projectIndex], ...req.body };
+  const schema = {
+    name: { type: 'string', minLength: 1, maxLength: 100 },
+    description: { type: 'string', maxLength: 500 },
+    budget: { type: 'number', min: 0, max: 999999999 }
+  };
+
+  const errors = validate(schema, req.body);
+  if (errors) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Validation failed',
+      details: errors
+    });
+  }
+
+  // Prevent updating ID or owner
+  const { id: _id, owner: _owner, ...allowedFields } = req.body;
+  projects[projectIndex] = { ...projects[projectIndex], ...allowedFields };
   persist();
+
   res.status(200).json({
     status: 200,
     ...projects[projectIndex]
@@ -315,6 +518,7 @@ app.delete('/api/projects/:id', authenticateToken, (req, res) => {
 
   projects = projects.filter(p => p.id !== id);
   persist();
+
   res.status(200).json({
     status: 200,
     message: 'Project deleted successfully'
@@ -325,13 +529,44 @@ app.delete('/api/projects/:id', authenticateToken, (req, res) => {
 app.get('/api/finances', authenticateToken, (req, res) => {
   res.status(200).json({
     status: 200,
-    data :finances
+    data: finances
   });
 });
 
 // Create finance entry
 app.post('/api/finances', authenticateToken, (req, res) => {
+  const schema = {
+    project_id: { required: true, type: 'string', minLength: 6, maxLength: 12 },
+    amount: { required: true, type: 'number', min: 0.01, max: 999999999 },
+    category: { required: true, type: 'string', minLength: 1, maxLength: 50 },
+    date: {
+      required: true,
+      type: 'string',
+      validate: (v) => /^\d{4}-\d{2}-\d{2}$/.test(v),
+      message: 'date must be in YYYY-MM-DD format'
+    }
+  };
+
+  const errors = validate(schema, req.body);
+  if (errors) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Validation failed',
+      details: errors
+    });
+  }
+
   const { project_id, amount, category, date } = req.body;
+
+  // Check if project exists
+  const projectExists = projects.some(p => p.id === project_id);
+  if (!projectExists) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Referenced project_id does not exist'
+    });
+  }
+
   const newFinance = {
     id: nanoid(8),
     project_id,
@@ -339,8 +574,10 @@ app.post('/api/finances', authenticateToken, (req, res) => {
     category,
     date
   };
+
   finances.push(newFinance);
   persist();
+
   res.status(201).json({
     status: 201,
     ...newFinance
@@ -349,6 +586,7 @@ app.post('/api/finances', authenticateToken, (req, res) => {
 
 // Update finance entry
 app.put('/api/finances/:id', authenticateToken, (req, res) => {
+  console.log(req.body)
   const id = req.params.id;
   const financeIndex = finances.findIndex(f => f.id === id);
 
@@ -359,8 +597,43 @@ app.put('/api/finances/:id', authenticateToken, (req, res) => {
     });
   }
 
-  finances[financeIndex] = { ...finances[financeIndex], ...req.body };
+  const schema = {
+    project_id: { type: 'string', minLength: 6, maxLength: 12 },
+    amount: { type: 'number', min: 0.01, max: 999999999 },
+    category: { type: 'string', minLength: 1, maxLength: 50 },
+    date: {
+      type: 'string',
+      validate: (v) => /^\d{4}-\d{2}-\d{2}$/.test(v),
+      message: 'date must be in YYYY-MM-DD format'
+    }
+  };
+
+  const errors = validate(schema, req.body);
+  console.log(errors)
+  if (errors) {
+    return res.status(400).json({
+      status: 400,
+      error: 'Validation failed',
+      details: errors
+    });
+  }
+
+  // Validate project_id if being changed
+  if (req.body.project_id) {
+    const projectExists = projects.some(p => p.id === req.body.project_id);
+    if (!projectExists) {
+      return res.status(404).json({
+        status: 404,
+        error: 'Referenced project_id does not exist'
+      });
+    }
+  }
+
+  // Prevent updating ID
+  const { id: _id, ...allowedFields } = req.body;
+  finances[financeIndex] = { ...finances[financeIndex], ...allowedFields };
   persist();
+
   res.status(200).json({
     status: 200,
     ...finances[financeIndex]
@@ -381,6 +654,7 @@ app.delete('/api/finances/:id', authenticateToken, (req, res) => {
   }
 
   persist();
+
   res.status(200).json({
     status: 200,
     message: 'Finance entry deleted successfully'
@@ -391,7 +665,7 @@ app.delete('/api/finances/:id', authenticateToken, (req, res) => {
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 200,
-    message: 'Mock API with names, short UUIDs, phone auth, JSON persistence is running'
+    message: '✅ Mock API with validation, security, names, short UUIDs, phone auth, and JSON persistence is running'
   });
 });
 

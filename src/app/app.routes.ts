@@ -3,9 +3,8 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { NotFoundComponent } from './features/notfound/notfound.component';
 import { HomeComponent } from './features/home/home.component';
-import { UserManagementComponent } from './features/dashboard/user-management/user-management.component';
-import { UserEditComponent } from './features/dashboard/user-management/user-edit/user-edit.component';
-import { UserAddComponent } from './features/dashboard/user-management/user-add/user-add.component';
+import { EntityManagementComponent } from './features/dashboard/entity-management/entity-management.component';
+import { EntityEditComponent } from './features/dashboard/entity-management/entity-edit/entity-edit.component';
 
 export const routes: Routes = [
   {
@@ -20,19 +19,19 @@ export const routes: Routes = [
     title: 'Dashboard',
   },
   {
-    path: 'dashboard/users',
-    component: UserManagementComponent,
-    title: 'User Management',
+    path: 'dashboard/:type',
+    component: EntityManagementComponent,
+    // title: 'Entity Management',
   },
   {
-    path: 'dashboard/users/add',
-    component:UserAddComponent,
-    title: 'Add User',
+    path: 'dashboard/:mode/:type/:id',
+    component: EntityEditComponent,
+    // title: 'Edit',
   },
   {
-    path: 'dashboard/users/:id',
-    component: UserEditComponent,
-    title: 'Edit User',
+    path: 'dashboard/:mode/:type',
+    component: EntityEditComponent,
+    // title: 'Add',
   },
   {
     path: 'login',

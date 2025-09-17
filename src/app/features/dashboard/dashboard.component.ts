@@ -1,7 +1,8 @@
+
 import { Component, computed } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DashboardService } from './service/dashboard.service';
-import { DataEditMode, Project, User } from '../../shared/data.types';
+import { DataEditMode, Finance, Project, User } from '../../shared/data.types';
 import { MatButton, MatFabButton } from '@angular/material/button';
 import { DialogComponent } from "./dialog/dialog.component";
 // import { AppRoutingModule } from "../../app-routing.module";
@@ -16,7 +17,11 @@ export class DashboardComponent {
   isAdmin = false; // Placeholder: set to true for admin, false for non-admin
   canEditUsers = false; // Placeholder: allow editing users
   canEditFinance = false;
-  canEditProjects = false; // Placeholder: allow editing finance
+  canEditProjects = false;
+  projects : Project[] = []
+  users : User[] = []
+  finances : Finance[] = []
+  // Placeholder: allow editing finance
   isDialogOpen = computed(() => this.dashboardService.isDialogOpen());
   constructor(
     private router: Router,
@@ -35,6 +40,18 @@ export class DashboardComponent {
       this.canEditProjects = user.role === 'admin';
       console.log(this.isAdmin);
     });
+    dashboardService.dataRequestHandler({ mode: 'get', type: 'projects' }).then((res) => {
+      console.log(res);
+      this.projects = res?.responese.data;
+    });
+    dashboardService.dataRequestHandler({ mode: 'get', type: 'users' }).then((res) => {
+      console.log(res);
+      this.users = res?.responese.data;
+    });
+    dashboardService.dataRequestHandler({ mode: 'get', type: 'finances' }).then((res) => {
+      console.log(res);
+      this.finances = res?.responese.data;
+    });
     }catch(e){
       console.log(e);
     }
@@ -42,23 +59,18 @@ export class DashboardComponent {
   }
   onEditData(mode: DataEditMode) {
     this.dashboardService.dataRequestHandler(mode).then((res) => {
-      // if ()
       console.log(res);
       this.dashboardService.statusCodeHandler(res?.responese.status, console.log);
-      this.dashboardService.openDialog({
-        title: res?.title!.at(0)?.toUpperCase()! + res?.title!.slice(1 , res?.title?.length), 
-        items: res?.responese.data,
-        icon: 'success',
-        confirmButtonText: 'OK',
-      })
-      // this.dashboardService.isDialogOpen.update((data) => {
-      //   data.hidden = false;
-      //   data.title = res?.title!.at(0)?.toUpperCase()! + res?.title!.slice(1 , res?.title?.length); 
-      //   data.items = res?.responese.data;
-      //   // console.log(res?.responese.data)
-      //   return data;
-      // });
+      this.router.navigate(['/dashboard/' + mode.type]);
+      // this.dashboardService.openDialog({
+      //   title: res?.title!.at(0)?.toUpperCase()! + res?.title!.slice(1 , res?.title?.length), 
+      //   items: res?.responese.data,
+      //   icon: 'success',
+      //   confirmButtonText: 'OK',
+      // })
     });
   }
-
+  onGenerateReport(){
+    this.router.navigate(['/dashboard/report']);
+  }
 }

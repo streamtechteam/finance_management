@@ -3,20 +3,21 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { dataIntercept } from './interceptors/http.interceptor';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { provideSweetAlert2 } from '@sweetalert2/ngx-sweetalert2';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes , withViewTransitions()),
     provideHttpClient(withInterceptors([dataIntercept])),
-    provideSweetAlert2({ fireOnInit: true, dismissOnDestroy: true }),
+    provideNativeDateAdapter(),
+    
   ],
 };

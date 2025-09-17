@@ -9,14 +9,20 @@
 }
 
 .dashboard-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 2rem auto;
-  max-width: 1200px;
-  width: 100%;
+  /* max-width: 1200px; */
+  width: 90%;
+  height: 85%;
   padding: 2rem;
   background: #fff;
   border-radius: 25px;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
 }
+
+
 
 .dashboard-header {
   text-align: center;
