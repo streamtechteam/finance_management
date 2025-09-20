@@ -44,13 +44,6 @@
   ],
   "finances": [
     {
-      "id": "5NJE8O7x",
-      "project_id": "rHJihNhx",
-      "amount": 25000,
-      "category": "Development",
-      "date": "2024-01-15"
-    },
-    {
       "id": "clBxxifX",
       "project_id": "rHJihNhx",
       "amount": 15000,

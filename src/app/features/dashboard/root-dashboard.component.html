@@ -1,0 +1,10 @@
+
+<mat-toolbar>
+  <button matIconButton (click)="sidebar.isSidenavOpen.set(!sidebar.isSidenavOpen())">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Finance Management</span>
+</mat-toolbar>
+<SidebarComponent #sidebar>
+    <router-outlet></router-outlet>
+</SidebarComponent>

@@ -1,11 +1,11 @@
 
 import { Component, computed } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { DashboardService } from './service/dashboard.service';
-import { DataEditMode, Finance, Project, User } from '../../shared/data.types';
+import { DashboardService } from '../service/dashboard.service';
+import { DataEditMode, Finance, Project, User } from '../../../shared/data.types';
 import { MatButton, MatFabButton } from '@angular/material/button';
-import { DialogComponent } from "./dialog/dialog.component";
-import { SidebarService } from '../sidebar/service/sidebar.service';
+import { DialogComponent } from "../dialog/dialog.component";
+import { SidebarService } from '../../sidebar/service/sidebar.service';
 // import { AppRoutingModule } from "../../app-routing.module";
 
 @Component({
@@ -67,16 +67,11 @@ export class DashboardComponent {
 
   }
   onEditData(mode: DataEditMode) {
+    // this.dashboardService.statusCodeHandler(200,alert)
     this.dashboardService.dataRequestHandler(mode).then((res) => {
       console.log(res);
       this.dashboardService.statusCodeHandler(res?.responese.status, console.log);
       this.router.navigate(['/dashboard/' + mode.type]);
-      // this.dashboardService.openDialog({
-      //   title: res?.title!.at(0)?.toUpperCase()! + res?.title!.slice(1 , res?.title?.length), 
-      //   items: res?.responese.data,
-      //   icon: 'success',
-      //   confirmButtonText: 'OK',
-      // })
     });
   }
   onGenerateReport(){

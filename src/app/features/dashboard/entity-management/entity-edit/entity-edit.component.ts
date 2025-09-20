@@ -193,8 +193,8 @@ export class EntityEditComponent {
 
   showPasswordClick(event: MouseEvent) {
     this.hidePassword.set(!this.hidePassword());
-    event.stopPropagation();
   }
+  
   onSubmit() {
     let data: Partial<User | Project | Finance> = {};
     for (let field of this.fields) {

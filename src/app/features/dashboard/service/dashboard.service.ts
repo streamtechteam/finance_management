@@ -96,6 +96,7 @@ export class DashboardService {
   statusCodeHandler(code: HttpStatusCode, alertFunc: Function) {
     // friendly advice :
     // dont try to understand this variable , you may lost a lot of brain cells , it just works
+    console.log(HttpStatusCode);
     let status = Object.keys(HttpStatusCode).slice(
       Object.keys(HttpStatusCode).length / 2,
       Object.keys(HttpStatusCode).length
@@ -124,6 +125,7 @@ export class DashboardService {
       code: statusCode,
     };
   }
+  
   checkIfTokenExist() {
     return localStorage.getItem('token') != null;
     // this.editData()

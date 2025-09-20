@@ -27,31 +27,18 @@ export class LoginComponent {
   hidePassword = signal(true);
   showPasswordClick(event: MouseEvent) {
     this.hidePassword.set(!this.hidePassword());
-    event.stopPropagation();
   }
   constructor(
     private router: Router,
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private sidebarService: SidebarService,
   ) {
-    this.sidebarService.menuItems.set([
-      {title: 'Home', link: '/'},
-      // {title: 'Report', link: '/dashboard/report'},
-      // {title: 'Login', link: '/login'},
-    ])
     this.loginForm = this.formBuilder.group({
       phonenumber: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
     });
-    // this.authService
   }
-  // this.verifyToken().then((res) => {
-  //   if (typeof res === 'boolean' && res) {
-  //     this.loginDone();
-  //   }
-  // });
-  // }
+
 
   get numberCtrl() {
     return this.loginForm.get('phonenumber');

@@ -18,7 +18,10 @@ export class AuthService {
 
   verifyLogin(formData: FormDataType) {
     // console.log('formData', JSON.stringify(formData));
-    let formDataServer = {
+    let formDataServer : {
+      phone: string;
+      password: string;
+    } = {
       phone: formData.phonenumber,
       password: formData.password,
     };

@@ -38,7 +38,7 @@ export class EntityManagementComponent {
     ])
     this.route.paramMap.subscribe((params) => {
       this.type = params.get('type')!;
-      title.setTitle(this.type.at(0)?.toUpperCase() + this.type.slice(1, this.type.length -1) + ' Management');
+      title.setTitle(this.type[0]?.toUpperCase() + this.type.slice(1, this.type.length -1) + ' Management');
           switch (this.type) {
             case 'users':
               this.entities = this.entities as User[];
@@ -82,15 +82,6 @@ export class EntityManagementComponent {
       .then((res) => {
         console.log(res);
         this.entities = res?.responese.data;
-        // for (let entity of this.entities){
-        //     for (let field of this.fields){
-        //         this.items.push(entity[field.name]);
-        //         // entity[field.name] = res?.responese.data.find((u: { id: string | null }) => u.id === entity.id)[field.name];
-        //     }
-        // }
-        // console.log(this.entities)
-        // console.log(this.items);
-        // this.entities = res?.responese.data;
       });
   }
   onDeleteClick(id: string) {

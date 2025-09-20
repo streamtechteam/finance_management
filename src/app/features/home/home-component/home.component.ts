@@ -2,7 +2,7 @@
 import { Component } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { SidebarService } from '../sidebar/service/sidebar.service';
+import { SidebarService } from '../../sidebar/service/sidebar.service';
 @Component({
   selector: 'HomeComponent',
   imports: [MatButton, RouterLink ],
@@ -11,10 +11,10 @@ import { SidebarService } from '../sidebar/service/sidebar.service';
 })
 export class HomeComponent {
   constructor(private sidebarService: SidebarService) {
-    this.sidebarService.menuItems.set([
-      // {title: 'Dashboard', link: '/dashboard'},
+    // this.sidebarService.menuItems.set([
+    //   // {title: 'Dashboard', link: '/dashboard'},
 
-      {title: 'Login', link: '/login'},
-    ])
+    //   {title: 'Login', link: '/login'},
+    // ])
   }
 }
