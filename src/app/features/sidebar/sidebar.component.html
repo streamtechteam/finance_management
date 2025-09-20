@@ -1,0 +1,25 @@
+<mat-toolbar>
+  <button matIconButton (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Finance Management</span>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <!-- Toolbar / Header -->
+  
+  <!-- Sidebar -->
+  <mat-sidenav #sidenav mode="over" opened>
+    <mat-nav-list>
+      @for (sidebarItem of menuItems(); track $index) {
+        <a mat-list-item [routerLink]="sidebarItem.link">{{ sidebarItem.title }}</a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content>
+    <div class="content">
+      <ng-content></ng-content>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

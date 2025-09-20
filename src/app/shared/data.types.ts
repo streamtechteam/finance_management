@@ -53,3 +53,9 @@ export type DialogData = {
   title: string;
   items: any[];
 }
+
+export type SidebarItem ={
+  title: string;
+  // icon: string;
+  link: string;
+}

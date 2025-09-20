@@ -8,6 +8,7 @@ import { AlertConfig } from '../../../shared/alert.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { DataDialogConfig } from '../../../shared/dataDialog.interface';
+import { BASEURL } from '../../../network.config';
 
 @Injectable({
   providedIn: 'root',
@@ -63,28 +64,23 @@ export class DashboardService {
       switch (mode.mode) {
         case 'add':
           response = await firstValueFrom(
-            this.httpClient.post(`http://localhost:3001/api/${mode.type}`, mode.data)
+            this.httpClient.post(`${BASEURL}/api/${mode.type}`, mode.data)
           );
           break;
         case 'edit':
           response = await firstValueFrom(
-            this.httpClient.put(
-              `http://localhost:3001/api/${mode.type}/${mode.data.id}`,
-              mode.data
-            )
+            this.httpClient.put(`${BASEURL}/api/${mode.type}/${mode.data.id}`, mode.data)
           );
           title = mode.type;
           break;
         case 'delete':
           response = await firstValueFrom(
-            this.httpClient.delete(`http://localhost:3001/api/${mode.type}/${mode.id}`)
+            this.httpClient.delete(`${BASEURL}/api/${mode.type}/${mode.id}`)
           );
           title = mode.type;
           break;
         case 'get':
-          response = await firstValueFrom(
-            this.httpClient.get(`http://localhost:3001/api/${mode.type}`)
-          );
+          response = await firstValueFrom(this.httpClient.get(`${BASEURL}/api/${mode.type}`));
           title = mode.type;
           break;
       }

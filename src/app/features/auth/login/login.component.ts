@@ -13,6 +13,7 @@ import { FormDataType } from '../../../shared/data.types';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatFormField, MatHint, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
+import { SidebarService } from '../../sidebar/service/sidebar.service';
 
 @Component({
   standalone: true,
@@ -31,8 +32,14 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private sidebarService: SidebarService,
   ) {
+    this.sidebarService.menuItems.set([
+      {title: 'Home', link: '/'},
+      // {title: 'Report', link: '/dashboard/report'},
+      // {title: 'Login', link: '/login'},
+    ])
     this.loginForm = this.formBuilder.group({
       phonenumber: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],

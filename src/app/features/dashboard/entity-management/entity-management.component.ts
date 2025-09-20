@@ -8,6 +8,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DataType, Finance, Project, User } from '../../../shared/data.types';
 import { MaterialAlertService } from '../../alert/service/alert.service';
 import { Title } from '@angular/platform-browser';
+import { SidebarService } from '../../sidebar/service/sidebar.service';
 
 @Component({
   selector: 'EntityManagementComponent',
@@ -25,9 +26,16 @@ export class EntityManagementComponent {
   constructor(
     private dashboardService: DashboardService,
     private alert: MaterialAlertService,
+    private sidebarService: SidebarService,
     private route: ActivatedRoute,
     private title: Title
   ) {
+    this.sidebarService.menuItems.set([
+      {title: 'Dashboard', link: '/dashboard'},
+      {title: 'View Users', link: '/dashboard/users'},
+      {title: 'View Projects', link: '/dashboard/projects'},
+      {title: 'View Finances', link: '/dashboard/finances'},
+    ])
     this.type = this.route.snapshot.paramMap.get('type')!;
     title.setTitle(this.type.at(0)?.toUpperCase() + this.type.slice(1, this.type.length -1) + ' Management');
 

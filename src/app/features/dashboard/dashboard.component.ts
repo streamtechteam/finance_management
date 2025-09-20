@@ -5,6 +5,7 @@ import { DashboardService } from './service/dashboard.service';
 import { DataEditMode, Finance, Project, User } from '../../shared/data.types';
 import { MatButton, MatFabButton } from '@angular/material/button';
 import { DialogComponent } from "./dialog/dialog.component";
+import { SidebarService } from '../sidebar/service/sidebar.service';
 // import { AppRoutingModule } from "../../app-routing.module";
 
 @Component({
@@ -26,7 +27,15 @@ export class DashboardComponent {
   constructor(
     private router: Router,
     private dashboardService: DashboardService,
+    private sidebarService: SidebarService,
   ) {
+    this.sidebarService.menuItems.set([
+      // {title: 'Dashboard', link: '/dashboard'},
+      {title: 'Home', link: '/'},
+      {title: 'View Users', link: '/dashboard/users'},
+      {title: 'View Projects', link: '/dashboard/projects'},
+      {title: 'View Finances', link: '/dashboard/finances'},
+    ])
     try{
     dashboardService.dataRequestHandler({ mode: 'get', type: 'me' }).then((res) => {
       if ( res?.responese == null ){
