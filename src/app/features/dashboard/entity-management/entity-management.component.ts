@@ -19,7 +19,7 @@ import { SidebarService } from '../../sidebar/service/sidebar.service';
 export class EntityManagementComponent {
   // entities: User[] | Project[] | Finance[] = [];
   fields: { name: string; label: string }[] = [];
-  type: string;
+  type!: string;
   entities: any[] = [];
   // items : any[]  = [];
   
@@ -36,40 +36,45 @@ export class EntityManagementComponent {
       {title: 'View Projects', link: '/dashboard/projects'},
       {title: 'View Finances', link: '/dashboard/finances'},
     ])
-    this.type = this.route.snapshot.paramMap.get('type')!;
-    title.setTitle(this.type.at(0)?.toUpperCase() + this.type.slice(1, this.type.length -1) + ' Management');
+    this.route.paramMap.subscribe((params) => {
+      this.type = params.get('type')!;
+      title.setTitle(this.type.at(0)?.toUpperCase() + this.type.slice(1, this.type.length -1) + ' Management');
+          switch (this.type) {
+            case 'users':
+              this.entities = this.entities as User[];
+              this.fields = [
+                { name: 'name', label: 'Name' },
+                { name: 'last_name', label: 'Last Name' },
+                { name: 'phone', label: 'Phone' },
+                { name: 'role', label: 'Role' },
+              ];
+              break;
+            case 'projects':
+              this.entities = this.entities as Project[];
+              this.fields = [
+                { name: 'name', label: 'Name' },
+                { name: 'description', label: 'Description' },
+                { name: 'budget', label: 'Budget' },
+                { name: 'owner', label: 'Owner' },
+              ];
+              break;
+            case 'finances':
+              this.entities = this.entities as Finance[];
+              this.fields = [
+                { name: 'project_id', label: 'Project ID' },
+                { name: 'amount', label: 'Amount' },
+                { name: 'category', label: 'Category' },
+                { name: 'date', label: 'Date' },
+              ];
+              break;
+          }
 
-    switch (this.type) {
-      case 'users':
-        this.entities = this.entities as User[];
-        this.fields = [
-          { name: 'name', label: 'Name' },
-          { name: 'last_name', label: 'Last Name' },
-          { name: 'phone', label: 'Phone' },
-          { name: 'role', label: 'Role' },
-        ];
-        break;
-      case 'projects':
-        this.entities = this.entities as Project[];
-        this.fields = [
-          { name: 'name', label: 'Name' },
-          { name: 'description', label: 'Description' },
-          { name: 'budget', label: 'Budget' },
-          { name: 'owner', label: 'Owner' },
-        ];
-        break;
-      case 'finances':
-        this.entities = this.entities as Finance[];
-        this.fields = [
-          { name: 'project_id', label: 'Project ID' },
-          { name: 'amount', label: 'Amount' },
-          { name: 'category', label: 'Category' },
-          { name: 'date', label: 'Date' },
-        ];
-        break;
-    }
+          this.getData();
+    })
+    // this.type = this.route.snapshot.paramMap.get('type')!;
+    // title.setTitle(this.type.at(0)?.toUpperCase() + this.type.slice(1, this.type.length -1) + ' Management');
 
-      this.getData();
+
   }
   getData() {
     this.dashboardService

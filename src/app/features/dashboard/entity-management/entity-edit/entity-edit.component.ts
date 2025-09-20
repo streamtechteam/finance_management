@@ -218,8 +218,8 @@ export class EntityEditComponent {
       .then((res) => {
         let successMessage;
         this.mode == 'edit'
-          ? (successMessage = 'updated successfully')
-          : (successMessage = 'added successfully');
+          ? (successMessage = 'Updated successfully')
+          : (successMessage = 'Added successfully');
         console.log(res);
         this.dashboardService.statusCodeHandler(res?.responese.status, console.log);
         this.alert.success(successMessage, 'Success').subscribe((res) => {

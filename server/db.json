@@ -31,7 +31,8 @@
       "name": "Project Alpha",
       "description": "First project",
       "budget": 50000,
-      "owner": "w_7BaxIJ"
+      "owner": "w_7BaxIJ",
+      "date": "NaN-NaN-NaN"
     },
     {
       "id": "R6c7MAQz",

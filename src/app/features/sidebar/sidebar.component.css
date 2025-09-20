@@ -1,15 +1,23 @@
 
+    :host{
+        height: 100%;
+    }
     .sidenav-container {
-        /* height: 100vh; */
-        /* height: 100vh; */
+        height: 100%;
     }
 
     mat-sidenav {
         width: 250px;
+        border-radius: 0px;
+        padding: 10px;
     }
+    /* mat-sidenav button {
+        border-radius: 0px;
+    } */
 
     
 
     .content {
-        padding: 16px;
+        height: 100%;
+        /* padding: 16px; */
     }

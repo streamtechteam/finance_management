@@ -1,0 +1,10 @@
+:host{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+
+mat-toolbar button{
+    margin-right: 10px;
+}

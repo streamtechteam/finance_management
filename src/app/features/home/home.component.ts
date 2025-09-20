@@ -12,7 +12,7 @@ import { SidebarService } from '../sidebar/service/sidebar.service';
 export class HomeComponent {
   constructor(private sidebarService: SidebarService) {
     this.sidebarService.menuItems.set([
-      {title: 'Dashboard', link: '/dashboard'},
+      // {title: 'Dashboard', link: '/dashboard'},
 
       {title: 'Login', link: '/login'},
     ])

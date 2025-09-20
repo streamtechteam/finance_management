@@ -16,6 +16,7 @@ import { SidebarItem } from '../../shared/data.types';
 })
 export class SidebarComponent {
   isSidenavOpen = signal(false);
+  
   menuItems : Signal<SidebarItem[]> ;
   constructor(private sidebarService: SidebarService) {
     this.menuItems = computed(() => this.sidebarService.menuItems());
