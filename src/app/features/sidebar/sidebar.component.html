@@ -6,7 +6,7 @@
   <mat-sidenav #sidenav mode="side" [(opened)]="isSidenavOpen">
     <mat-nav-list>
       @for (sidebarItem of menuItems(); track $index) {
-        <a mat-list-item [routerLink]="sidebarItem.link">{{ sidebarItem.title }}</a>
+        <a mat-list-item  [routerLink]="sidebarItem.link">{{ sidebarItem.title }}</a>
       }
     </mat-nav-list>
   </mat-sidenav>

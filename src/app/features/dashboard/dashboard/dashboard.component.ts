@@ -4,13 +4,13 @@ import { Router, RouterLink } from '@angular/router';
 import { DashboardService } from '../service/dashboard.service';
 import { DataEditMode, Finance, Project, User } from '../../../shared/data.types';
 import { MatButton, MatFabButton } from '@angular/material/button';
-import { DialogComponent } from "../dialog/dialog.component";
+// import { DialogComponent } from "../dialog/dialog.component";
 import { SidebarService } from '../../sidebar/service/sidebar.service';
 // import { AppRoutingModule } from "../../app-routing.module";
 
 @Component({
   selector: 'DashboardComponent',
-  imports: [RouterLink, MatButton, MatFabButton, DialogComponent],
+  imports: [RouterLink, MatButton, MatFabButton],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
@@ -23,7 +23,7 @@ export class DashboardComponent {
   users : User[] = []
   finances : Finance[] = []
   // Placeholder: allow editing finance
-  isDialogOpen = computed(() => this.dashboardService.isDialogOpen());
+  // isDialogOpen = computed(() => this.dashboardService.isDialogOpen());
   constructor(
     private router: Router,
     private dashboardService: DashboardService,

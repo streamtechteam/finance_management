@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { AlertResult } from '../../alert/service/alert.service';
 import { AlertConfig } from '../../../shared/alert.interface';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../dialog/dialog.component';
+// import { DialogComponent } from '../dialog/dialog.component';
 import { DataDialogConfig } from '../../../shared/dataDialog.interface';
 import { BASEURL } from '../../../network.config';
 
@@ -14,38 +14,8 @@ import { BASEURL } from '../../../network.config';
   providedIn: 'root',
 })
 export class DashboardService {
-  isDialogOpen = signal<DialogData>({
-    hidden: true,
-    title: '',
-    items: [],
-  });
 
   constructor(private httpClient: HttpClient, private router: Router, private dialog: MatDialog) {}
-
-  public openDialog(config: DataDialogConfig): Observable<AlertResult> {
-    return this.dialog
-      .open(DialogComponent, {
-        data: config,
-        width: '400px',
-        maxWidth: '95vw',
-        disableClose: false,
-        autoFocus: false,
-      })
-      .afterClosed()
-      .pipe(
-        map((result) => {
-          // If user clicks confirm → result = input value (or true if no input)
-          // If user cancels or closes → result = false
-          if (result === undefined || result === false) {
-            return { isConfirmed: false };
-          }
-          return {
-            isConfirmed: true,
-            value: typeof result === 'string' ? result : null,
-          };
-        })
-      );
-  }
 
   async dataRequestHandler(mode: DataEditMode) : Promise<any> {
     try {

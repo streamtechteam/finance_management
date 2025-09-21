@@ -23,6 +23,7 @@ import {
 } from '../../../../shared/data.types';
 import { MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
 import { Title } from '@angular/platform-browser';
+import { SidebarService } from '../../../sidebar/service/sidebar.service';
 
 @Component({
   selector: 'EntityEdit',
@@ -57,8 +58,23 @@ export class EntityEditComponent {
     private activeRoute: ActivatedRoute,
     private dashboardService: DashboardService,
     private alert: MaterialAlertService,
-    private router: Router
+    private router: Router,
+    private sidebarService:SidebarService
   ) {
+    this.sidebarService.menuItems.set([{
+      title: 'Dashboard',
+      link: '/dashboard'
+    },{
+      title: 'View Users',
+      link: '/dashboard/users'
+    },{
+      title: 'View Projects',
+      link: '/dashboard/projects'
+    },{
+      title: 'View Finances',
+      link: '/dashboard/finances'
+    }])
+
     this.mode = this.activeRoute.snapshot.paramMap.get('mode')!;
     this.type = this.activeRoute.snapshot.paramMap.get('type')!;
     title.setTitle(this.mode.at(0)?.toUpperCase() + this.mode.slice(1) + ' ' + this.type.at(0)?.toUpperCase() + this.type.slice(1, this.type.length -1));
