@@ -7,6 +7,7 @@ import { EntityManagementComponent } from './features/dashboard/entity-managemen
 import { EntityEditComponent } from './features/dashboard/entity-management/entity-edit/entity-edit.component';
 import { RootHomeComponent } from './features/home/root-home.component';
 import { RootDashboardComponent } from './features/dashboard/root-dashboard.component';
+import { AuthGuard } from './features/auth/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: RootDashboardComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',

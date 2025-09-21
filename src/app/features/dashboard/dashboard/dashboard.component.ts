@@ -1,4 +1,3 @@
-
 import { Component, computed } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { DashboardService } from '../service/dashboard.service';
@@ -19,52 +18,51 @@ export class DashboardComponent {
   canEditUsers = false; // Placeholder: allow editing users
   canEditFinance = false;
   canEditProjects = false;
-  projects : Project[] = []
-  users : User[] = []
-  finances : Finance[] = []
+  projects: Project[] = [];
+  users: User[] = [];
+  finances: Finance[] = [];
   // Placeholder: allow editing finance
   // isDialogOpen = computed(() => this.dashboardService.isDialogOpen());
   constructor(
     private router: Router,
     private dashboardService: DashboardService,
-    private sidebarService: SidebarService,
+    private sidebarService: SidebarService
   ) {
     this.sidebarService.menuItems.set([
       // {title: 'Dashboard', link: '/dashboard'},
-      {title: 'Home', link: '/'},
-      {title: 'View Users', link: '/dashboard/users'},
-      {title: 'View Projects', link: '/dashboard/projects'},
-      {title: 'View Finances', link: '/dashboard/finances'},
-    ])
-    try{
-    dashboardService.dataRequestHandler({ mode: 'get', type: 'me' }).then((res) => {
-      if ( res?.responese == null ){
-        router.navigate(['/home']);
-      }
-      let user = res?.responese as User;
-      console.log(user.role);
-      this.isAdmin = user.role === 'admin';
-      this.canEditUsers = user.role === 'admin';
-      this.canEditFinance = user.role === 'admin';
-      this.canEditProjects = user.role === 'admin';
-      console.log(this.isAdmin);
-    });
-    dashboardService.dataRequestHandler({ mode: 'get', type: 'projects' }).then((res) => {
-      console.log(res);
-      this.projects = res?.responese.data;
-    });
-    dashboardService.dataRequestHandler({ mode: 'get', type: 'users' }).then((res) => {
-      console.log(res);
-      this.users = res?.responese.data;
-    });
-    dashboardService.dataRequestHandler({ mode: 'get', type: 'finances' }).then((res) => {
-      console.log(res);
-      this.finances = res?.responese.data;
-    });
-    }catch(e){
-      console.log(e);
-    }
-
+      { title: 'Home', link: '/' },
+      { title: 'View Users', link: '/dashboard/users' },
+      { title: 'View Projects', link: '/dashboard/projects' },
+      { title: 'View Finances', link: '/dashboard/finances' },
+    ]);
+    // try {
+      dashboardService.dataRequestHandler({ mode: 'get', type: 'me' }).then((res) => {
+        if (res?.responese == null) {
+          router.navigate(['/home']);
+        }
+        let user = res?.responese as User;
+        console.log(user.role);
+        this.isAdmin = user.role === 'admin';
+        this.canEditUsers = user.role === 'admin';
+        this.canEditFinance = user.role === 'admin';
+        this.canEditProjects = user.role === 'admin';
+        console.log(this.isAdmin);
+      });
+      dashboardService.dataRequestHandler({ mode: 'get', type: 'projects' }).then((res) => {
+        console.log(res);
+        this.projects = res?.responese.data;
+      });
+      dashboardService.dataRequestHandler({ mode: 'get', type: 'users' }).then((res) => {
+        console.log(res);
+        this.users = res?.responese.data;
+      });
+      dashboardService.dataRequestHandler({ mode: 'get', type: 'finances' }).then((res) => {
+        console.log(res);
+        this.finances = res?.responese.data;
+      });
+    // } catch (e) {
+      // console.log(e);
+    // }
   }
   onEditData(mode: DataEditMode) {
     // this.dashboardService.statusCodeHandler(200,alert)
@@ -74,7 +72,7 @@ export class DashboardComponent {
       this.router.navigate(['/dashboard/' + mode.type]);
     });
   }
-  onGenerateReport(){
+  onGenerateReport() {
     this.router.navigate(['/dashboard/report']);
   }
 }

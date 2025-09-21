@@ -77,26 +77,36 @@ export class EntityManagementComponent {
 
   }
   getData() {
-    this.dashboardService
+    try{
+      this.dashboardService
       .dataRequestHandler({ mode: 'get', type: this.type as DataType })
       .then((res) => {
         console.log(res);
         this.entities = res?.responese.data;
-      });
+        });
+    }
+    catch(e){
+      console.log(e);
+    }
   }
   onDeleteClick(id: string) {
-    this.dashboardService
-      .dataRequestHandler({
-        mode: 'delete',
-        type: this.type as DataType,
-        id: id,
-      })
-      .then((res) => {
-        console.log(res);
-        this.dashboardService.statusCodeHandler(res?.responese.status, console.log);
-        this.alert.success('deleted successfully', 'Success').subscribe((res) => {
-          this.getData();
+    try{
+      this.dashboardService
+        .dataRequestHandler({
+          mode: 'delete',
+          type: this.type as DataType,
+          id: id,
+        })
+        .then((res) => {
+          console.log(res);
+          this.dashboardService.statusCodeHandler(res?.responese.status, console.log);
+          this.alert.success('deleted successfully', 'Success').subscribe((res) => {
+            this.getData();
+          });
         });
-      });
+    }
+    catch(e){
+      console.log(e);
+    }
   }
 }

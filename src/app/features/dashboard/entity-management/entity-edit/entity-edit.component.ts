@@ -189,6 +189,7 @@ export class EntityEditComponent {
     activeRoute.paramMap.subscribe((params) => {
       if (params.get('id')) {
         this.id = params.get('id');
+        try{
         this.dashboardService
           .dataRequestHandler({
             mode: 'get',
@@ -203,6 +204,11 @@ export class EntityEditComponent {
               res?.responese?.data.find((u: { id: string | null }) => u.id === params.get('id'))
             );
           });
+        }
+        catch(e){
+          console.log(e);
+        }
+
       }
     });
   }
@@ -225,25 +231,30 @@ export class EntityEditComponent {
     }
 
     console.log(data);
-    this.dashboardService
-      .dataRequestHandler({
-        mode: this.mode as any,
-        type: this.type as DataType,
-        data: data as User | Project | Finance,
-      })
-      .then((res) => {
-        let successMessage;
-        this.mode == 'edit'
-          ? (successMessage = 'Updated successfully')
-          : (successMessage = 'Added successfully');
-        console.log(res);
-        this.dashboardService.statusCodeHandler(res?.responese.status, console.log);
-        this.alert.success(successMessage, 'Success').subscribe((res) => {
-          if (res.isConfirmed) {
-            this.router.navigate(['/dashboard/' + this.type]);
-          }
+    try{
+      this.dashboardService
+        .dataRequestHandler({
+          mode: this.mode as any,
+          type: this.type as DataType,
+          data: data as User | Project | Finance,
+        })
+        .then((res) => {
+          let successMessage;
+          this.mode == 'edit'
+            ? (successMessage = 'Updated successfully')
+            : (successMessage = 'Added successfully');
+          console.log(res);
+          this.dashboardService.statusCodeHandler(res?.responese.status, console.log);
+          this.alert.success(successMessage, 'Success').subscribe((res) => {
+            if (res.isConfirmed) {
+              this.router.navigate(['/dashboard/' + this.type]);
+            }
+          });
         });
-      });
+    }
+    catch(e){
+      console.log(e);
+    }
 
   }
 }

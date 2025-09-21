@@ -1,6 +1,15 @@
+import { MaterialAlertService } from './../../alert/service/alert.service';
 import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { DataEditMode, DialogData, Finance, Project, User } from '../../../shared/data.types';
+import {
+  DataEditMode,
+  DeleteMode,
+  DialogData,
+  Finance,
+  Project,
+  UpdateMode,
+  User,
+} from '../../../shared/data.types';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertResult } from '../../alert/service/alert.service';
@@ -14,16 +23,74 @@ import { BASEURL } from '../../../network.config';
   providedIn: 'root',
 })
 export class DashboardService {
+  dialogMaxCount = 1;
+  dialogCount = 0;
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private dialog: MatDialog,
+    private alertService: MaterialAlertService
+  ) {}
 
-  constructor(private httpClient: HttpClient, private router: Router, private dialog: MatDialog) {}
-
-  async dataRequestHandler(mode: DataEditMode) : Promise<any> {
+  /**
+   * this fucntion handles all the data related requests
+   * @param {DataEditMode} mode
+   * @returns {Promise<any>}
+   * @example
+   * // this will return all the projects
+   * dataRequestHandler({mode: 'get', type: 'projects'});
+   */
+  async dataRequestHandler(data : DataEditMode): Promise<any> {
+    let response;
+    if (this.checkIfTokenExist() == false) {
+      // alert('You are not logged in');
+      this.alertService.error('You are not logged in');
+      this.router.navigate(['home']);
+    }
+    try {
+      await firstValueFrom(this.httpClient.get(`${BASEURL}/api/me`)).then((res) => {
+        response = this._dataRequestHandler(data);
+        // console.log("RES "+ res);
+      });
+    } catch (e) {
+      console.log(e);
+      if (this.dialogCount < this.dialogMaxCount) {
+        this.dialogCount++;
+        this.alertService.error('You are not logged in').subscribe((res) => {
+          if (res.isConfirmed) {
+            this.dialogCount = 0;
+          }
+        });
+        this.router.navigate(['home']);
+      }
+    }
+    if ( response != null ){
+      // console.log("RES "+ response);
+      return response;
+    }
+  }
+  async _dataRequestHandler(mode: DataEditMode): Promise<any> {
     try {
       let response: Project | User | Finance | any;
       let title;
       let token = null;
+      try {
+        // await firstValueFrom(this.httpClient.get(`${BASEURL}/api/me`));
+      } catch (e) {
+        console.log(e);
+        if (this.dialogCount < this.dialogMaxCount) {
+          this.dialogCount++;
+          this.alertService.error('You are not logged in').subscribe((res) => {
+            if (res.isConfirmed) {
+              this.dialogCount = 0;
+            }
+          });
+          this.router.navigate(['home']);
+        }
+      }
       if (this.checkIfTokenExist() == false) {
-        alert('You are not logged in');
+        // alert('You are not logged in');
+        this.alertService.error('You are not logged in');
         this.router.navigate(['home']);
 
         return;
@@ -54,6 +121,18 @@ export class DashboardService {
           title = mode.type;
           break;
       }
+
+      // dear god, i hate this (why didnt i just became a thief ??)
+      // dear mrs rangbar , here you go , with your "FUNCTIONAL" approach 😒
+      // my eyes hurt when i see this
+
+      // let map = new Map<DataEditMode["mode"], Function>([
+      //   ["add", async (data: any) => await firstValueFrom(this.httpClient.post(`${BASEURL}/api/${mode.type}`, data))],
+      //   ["edit", async (data: any) => await firstValueFrom(this.httpClient.put(`${BASEURL}/api/${mode.type}/${(mode as UpdateMode).data.id}`, data))],
+      //   ["delete", async () => await firstValueFrom(this.httpClient.delete(`${BASEURL}/api/${mode.type}/${(mode as DeleteMode).id}`))],
+      //   ["get", async () => await firstValueFrom(this.httpClient.get(`${BASEURL}/api/${mode.type}`))]
+      // ]);
+
       return {
         responese: response,
         title: title,
@@ -62,7 +141,7 @@ export class DashboardService {
       console.log('Error : ' + e.message);
     }
   }
-  
+
   statusCodeHandler(code: HttpStatusCode, alertFunc: Function) {
     // friendly advice :
     // dont try to understand this variable , you may lost a lot of brain cells , it just works
@@ -95,7 +174,7 @@ export class DashboardService {
       code: statusCode,
     };
   }
-  
+
   checkIfTokenExist() {
     return localStorage.getItem('token') != null;
     // this.editData()
