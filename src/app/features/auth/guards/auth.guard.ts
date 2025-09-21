@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router , private httpClient: HttpClient) {}
+  constructor(private router: Router, private httpClient: HttpClient) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -39,12 +39,14 @@ export class AuthGuard implements CanActivate {
     //       return false;
     //     }
     //   });
-    firstValueFrom(this.httpClient.get(`${BASEURL}/api/me`)).then((res) => {
-      console.log(res);
-      return true;
-    }).catch((err) => {
-      console.log(err);
-      return false;
+    this.httpClient.get(`${BASEURL}/api/me`).subscribe({
+      next: (res) => {
+        console.log(res);
+        return true;
+      },
+      error(err) {
+          console.log(err)
+      },
     });
     // Your authentication logic here
     return !!localStorage.getItem('token');

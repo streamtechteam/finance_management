@@ -121,18 +121,7 @@ export class DashboardService {
           title = mode.type;
           break;
       }
-
-      // dear god, i hate this (why didnt i just became a thief ??)
-      // dear mrs rangbar , here you go , with your "FUNCTIONAL" approach 😒
-      // my eyes hurt when i see this
-
-      // let map = new Map<DataEditMode["mode"], Function>([
-      //   ["add", async (data: any) => await firstValueFrom(this.httpClient.post(`${BASEURL}/api/${mode.type}`, data))],
-      //   ["edit", async (data: any) => await firstValueFrom(this.httpClient.put(`${BASEURL}/api/${mode.type}/${(mode as UpdateMode).data.id}`, data))],
-      //   ["delete", async () => await firstValueFrom(this.httpClient.delete(`${BASEURL}/api/${mode.type}/${(mode as DeleteMode).id}`))],
-      //   ["get", async () => await firstValueFrom(this.httpClient.get(`${BASEURL}/api/${mode.type}`))]
-      // ]);
-
+      
       return {
         responese: response,
         title: title,
